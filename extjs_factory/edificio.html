@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>CRUD &crudTitle Generado por ExtJs CRUD GENERATOR v0.1 BETA </title>
+
+<!-- ** CSS ** -->
+<!-- base library -->
+<link rel="stylesheet" type="text/css" href="css/ext-all.css" />
+
+<!-- overrides. use a gray style -->
+<link rel="stylesheet" type="text/css" href="css/xtheme-gray-extend.css"  />
+
+<!-- overrides to base library to use Grid Filtering -->
+<link rel="stylesheet" type="text/css" href="css/GridFilters.css" />
+<link rel="stylesheet" type="text/css" href="css/RangeMenu.css" />
+
+<!-- ** Javascript ** -->
+<!-- ExtJS library: base/adapter -->
+<script type="text/javascript" src="js/ext-base.js"></script>
+
+<!-- ExtJS library: all widgets MOODE: DEBUG -->
+<script type="text/javascript" src="js/ext-all-debug.js"></script>
+
+<!-- ExtJS library: localization spanish -->
+<script type="text/javascript" src="js/ext-lang-es.js"></script>	
+
+<!-- overrides to base library -->
+<script type="text/javascript" src="js/xdatefield/xdatefield.js"></script>
+
+<!-- extensions library to use Grid Filtering-->
+<script type="text/javascript" src="js/gridfilters/menu/RangeMenu.js"></script>
+<script type="text/javascript" src="js/gridfilters/menu/ListMenu.js"></script>
+
+<script type="text/javascript" src="js/gridfilters/GridFilters.js"></script>
+<script type="text/javascript" src="js/gridfilters/filter/Filter.js"></script>
+<script type="text/javascript" src="js/gridfilters/filter/StringFilter.js"></script>
+<script type="text/javascript" src="js/gridfilters/filter/DateFilter.js"></script>
+<script type="text/javascript" src="js/gridfilters/filter/ListFilter.js"></script>
+<script type="text/javascript" src="js/gridfilters/filter/NumericFilter.js"></script>
+<script type="text/javascript" src="js/gridfilters/filter/BooleanFilter.js"></script>
+
+
+<!-- Pagina JS del CRUD -->
+<script type="text/javascript" src="edificio.js"></script>
+
+<!-- Estilos del un combo-add TODO: Colocar la opcion en el combo de tipos de controles -->
+<style>
+.x-form-add-trigger
+	{
+	width:17px;
+	height:21px;
+	border:0;
+	background:transparent url(images/gray-extend/form/add-trigger.gif) no-repeat 0 0 !important;
+	cursor:pointer;
+	border-bottom:1px solid #B5B8C8;
+	position:absolute;
+	top:0;
+	}
+	
+.x-form-add-trigger-over{background-position:-17px 0 !important;}
+#loading-mask{
+	position:absolute;
+	left:0;
+	top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    background-color:white;
+}
+#loading{
+	position:absolute;
+	left:45%;
+	top:40%;
+	padding:2px;
+	z-index:20001;
+    height:auto;
+}
+#loading img {
+    margin-bottom:5px;
+}
+</style>
+</head>
+
+<body>	
+<!-- Mascara de Espera de Carga del formulario  -->
+<div id="loading-mask" style=""></div>
+  <div id="loading">
+    <div class="loading-indicator">Cargando...</div>
+  </div>
+<div id="content"></div>
+</body>
+</html>

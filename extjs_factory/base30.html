@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>CRUD Generado por ExtJS 3.0 &amp; CRUD GENERATOR v0.1 BETA {fecha} </title>
+
+<!-- ** CSS ** -->
+<!-- base library -->
+<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css" />
+
+<!-- overrides. use a gray style -->
+<link rel="stylesheet" type="text/css" href="extjs/resources/css/xtheme-gray.css"  />
+
+<!-- plugins library to use Grid Filtering -->
+<link rel="stylesheet" type="text/css" href="extjs/examples/ux/gridfilters/css/GridFilters.css" />
+<link rel="stylesheet" type="text/css" href="extjs/examples/ux/gridfilters/css/RangeMenu.css" />
+
+<!-- page specific -->
+<link rel="stylesheet" type="text/css" href="css/style.css"  />
+
+<!-- ** Javascript ** -->
+<!-- ExtJS library: base/adapter -->
+<script type="text/javascript" src="extjs/adapter/ext/ext-base.js"></script>
+
+<!-- ExtJS library: all widgets MOODE: DEBUG -->
+<script type="text/javascript" src="extjs/ext-all-debug.js"></script>
+<script type="text/javascript" src="extjs/examples/shared/extjs/App.js"></script>
+
+<!-- ExtJS library: localization spanish -->
+<script type="text/javascript" src="extjs/src/locale/ext-lang-es.js"></script>		
+
+<!-- overrides to base library -->
+<script type="text/javascript" src="js/xdatefield/xdatefield.js"></script>
+<script type="text/javascript" src="js/xdatefield/xcheckbox.js"></script>
+
+<!-- extensions library to use Grid Filtering-->
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/menu/RangeMenu.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/menu/ListMenu.js"></script>
+
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/GridFilters.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/Filter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/StringFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/DateFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/ListFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/NumericFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/BooleanFilter.js"></script>
+
+
+<!-- Pagina JS del CRUD -->
+<script type="text/javascript" src="js/objectExtjs.js"></script>
+
+<!-- Estilos del un combo-add TODO: Colocar la opcion en el combo de tipos de controles -->
+<style>
+.x-form-add-trigger
+	{
+	width:17px;
+	height:21px;
+	border:0;
+	background:transparent url(images/gray-extend/form/add-trigger.gif) no-repeat 0 0 !important;
+	cursor:pointer;
+	border-bottom:1px solid #B5B8C8;
+	position:absolute;
+	top:0;
+	}
+	
+.x-form-add-trigger-over{background-position:-17px 0 !important;}
+#loading-mask{
+	position:absolute;
+	left:0;
+	top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    background-color:white;
+}
+#loading{
+	position:absolute;
+	left:45%;
+	top:40%;
+	padding:2px;
+	z-index:20001;
+    height:auto;
+}
+#loading img {
+    margin-bottom:5px;
+}
+.add-icon{background:transparent url(images/icons/add.png) 0 0 no-repeat !important;}
+.save-icon{background:transparent url(images/icons/save.png) 0 0 no-repeat !important;}
+.delete-icon{background:transparent url(images/icons/delete.png) 0 0 no-repeat !important;}
+</style>
+</head>
+
+<body>	
+<!-- Mascara de Espera de Carga del formulario  -->
+<div id="loading-mask" style=""></div>
+  <div id="loading">
+    <div class="loading-indicator">Cargando...</div>
+  </div>
+	<h1>ExtJS+POG Form Binding</h1>
+    <p>Este ejemplo demuestra que se puede crear un formulario rapidamente usando ExtJS y POG.</p>
+	<div id="content"></div>
+</body>
+</html>
