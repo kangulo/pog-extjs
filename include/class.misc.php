@@ -99,6 +99,8 @@ class Misc
 	{
 		if ($type=="Ext.form.TextField"
 		|| $type=="Ext.form.ComboBox"
+		|| $type=="Ext.form.NumberField"
+		|| $type=="Ext.form.Radio"
 		|| $type=="Ext.form.Checkbox"
 		|| $type=="Ext.ux.form.XCheckbox"
 		|| $type=="Ext.form.DateField"

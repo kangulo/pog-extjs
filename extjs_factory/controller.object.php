@@ -29,9 +29,9 @@ class ObjectController
 		$misc = new Misc(array());
 		$this->string = "<?php";
 		$this->string .= $this->CreatePreface();
-		$this->string .= "\ninclude_once('configuration.php');";
-		$this->string .= "\ninclude_once('class/class.database.php');";
-		$this->string .= "\ninclude_once('class/class.".$this->objectName.".php');";
+		$this->string .= "\ninclude_once('../configuration.php');";
+		$this->string .= "\ninclude_once('../class/class.database.php');";
+		$this->string .= "\ninclude_once('../class/class.".$this->objectName.".php');";
 		$this->string .= "\n";
 	}
 	
@@ -43,6 +43,11 @@ class ObjectController
 		$this->string .= "\n	case 'Listar':";
 		$this->string .= "\n	{";
 		$this->string .= "\n		Listar();";
+		$this->string .= "\n		break;";
+		$this->string .= "\n	}";
+		$this->string .= "\n	case 'GetNewID':";
+		$this->string .= "\n	{    ";
+		$this->string .= "\n		GetNewID();";
 		$this->string .= "\n		break;";
 		$this->string .= "\n	}";
 		$this->string .= "\n	case 'Get':";
@@ -268,15 +273,16 @@ class ObjectController
 		foreach ($this->attributeList as $attribute)
 		{
 			if ( $x==0 ){
-				$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$data->co_" .rtrim($this->objectName,s). ";";
+				$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$_POST['co_" .rtrim($this->objectName,s). "'];";
 			}  
-			$this->string .="\n\t\$".$this->objectName."->".$attribute." \t= \$data->" . $attribute . ";";
+			$this->string .="\n\t\$".$this->objectName."->".$attribute." \t= \$_POST['" . $attribute . "'];";
 			$x++;
 		}
 		$this->string .="\n\tif ($".$this->objectName."->Save())";	
 		$this->string .="\n\t{";
 		$this->string .="\n\t\t\$result['message']    = 'Registro guardado Exitosamente!';";
 		$this->string .="\n\t\t\$result['success']    = true;";
+		$this->string .="\n\t\t\$result['co_".rtrim($this->objectName,s)."']    = $".$this->objectName."->co_".rtrim($this->objectName,s).";";
 		$this->string .="\n\t}";
 		$this->string .="\n\telse";
 		$this->string .="\n\t{";
@@ -294,8 +300,8 @@ class ObjectController
 		$this->string .= "\n\t".$this->separator."\n";
 		$this->string .= $this->CreateComments("Crea la rutina para salvar en la Base de Datos",'',"void");
 		$this->string .= "function Nuevo()\n{";
-		$this->string .= "\n\$info = \$_POST[\"data\"];";
-		$this->string .= "\n\$data = json_decode(stripslashes(\$info));";
+		$this->string .= "\n\t\$info = \$_POST[\"data\"];";
+		$this->string .= "\n\t\$data = json_decode(stripslashes(\$info));";
 		
 			
 		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
@@ -347,10 +353,11 @@ class ObjectController
 		$this->string .= "\n\t".$this->separator."\n";
 		$this->string .= $this->CreateComments("Crea la rutina para eliminar registros de la base de la Base de Datos",'',"void");
 		$this->string .= "function Eliminar()\n{";	
-		$this->string .= "\n\t\$id = json_decode(stripslashes(\$_POST['data']));";
+		$this->string .= "\n\t\$co_".rtrim($this->objectName,s)." = \$_POST['co_".rtrim($this->objectName,s)."'];";
 			
 		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
-		$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= json_decode(stripslashes(\$_POST['data']));";
+		$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$co_".rtrim($this->objectName,s).";";
+		
 		
 		$this->string .="\n\tif ($".$this->objectName."->Delete())";	
 		$this->string .="\n\t{";
@@ -375,6 +382,7 @@ class ObjectController
 		$this->string .= $this->CreateComments("Crea una serie de condiciones para aplicar los filtros",array("multidimensional array {(\"field\", \"comparator\", \"value\"), (\"field\", \"comparator\", \"value\"), ...}","bool \$deep"));
 		$this->string .= "\nfunction Listar()";
 		$this->string .= "\n{";
+		$this->string .= "\n\t\$search = isset(\$_GET['search']) ? \$_GET['search'] : '';";
 		$this->string .= "\n";		
 		$this->string .= "\n\t// Esto obtiene el array de filtros";
 		$this->string .= "\n\t\$filters = isset(\$_REQUEST['filter']) ? \$_REQUEST['filter'] : null;";
@@ -386,7 +394,7 @@ class ObjectController
 		$this->string .= "\n\t\t\$encoded = false;";
 		$this->string .= "\n\t} else {";
 		$this->string .= "\n\t\t\$encoded = true;";
-		$this->string .= "\n\t\t\$filters = json_decode(\$filters);";
+		$this->string .= "\n\t\t//\$filters = json_decode(\$filters);";
 		$this->string .= "\n\t}";
 		$this->string .= "\n";
 		$this->string .= "\n\t// initialize variables";
@@ -398,6 +406,10 @@ class ObjectController
 		$this->string .= "\n\t\$params = array();";
 		$this->string .= "\n\t\$params[] = array('co_".rtrim($this->objectName,s)."', '>', 0);";
 		$this->string .= "\n";
+		$this->string .= "\n\tif (!empty(\$search))";
+		$this->string .= "\n\t{";
+		$this->string .= "\n\t\t\$params[] = array('" . $this->attributeList[0] . "', 'like', \"%\$search%\");";
+		$this->string .= "\n\t}";
 		$this->string .= "\n";
 		$this->string .= "\n\t// loop through filters sent by client";
 		$this->string .= "\n\tif (is_array(\$filters)) {";
@@ -486,6 +498,13 @@ class ObjectController
 		$this->string .= "\n\t\t\t}";
 		$this->string .= "\n\t\t\t\$where .= \$qs;		";
 		$this->string .= "\n\t\t}";
+		$this->string .= "\n\t\telse";
+		$this->string .= "\n\t\t{";
+		$this->string .= "\n\t\t\tif (!empty(\$filters))";
+		$this->string .= "\n\t\t\t{";
+		$this->string .= "\n\t\t\t\t\$params[] = json_decode(\$filters);";
+		$this->string .= "\n\t\t\t}";
+		$this->string .= "\n\t\t}";
 		$this->string .= "\n";
 		$this->string .= "\n\t\t\$".$this->objectName." = new ".$this->objectName."();	";
 		$this->string .= "\n\t\t//print_r(\$params);	";
@@ -497,10 +516,14 @@ class ObjectController
 	// -------------------------------------------------------------
 	function CreateGetFunction()
 	{
-		$this->string .= "\n\t".$this->separator."\n\t";
+		$this->string .= "\n\t".$this->separator."\n";
 		$this->string .= $this->CreateComments("Gets object from database",array("integer \$co_".rtrim(strtolower($this->objectName),s).""),"object \$".$this->objectName);
-		$this->string .="\tfunction Get(\$co_".rtrim(strtolower($this->objectName),s).")\n\t{";
-		$this->string .= "\n\t\t\$connection = Database::Connect();";
+		$this->string .= "function Get()\n{";
+		$this->string .= "\n\t\$co_".rtrim($this->objectName,s)." \t= \$_POST['co_".rtrim($this->objectName,s)."'];";
+		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
+		$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$co_".rtrim($this->objectName,s).";";
+		$this->string .="\n\tprint $".$this->objectName."->Get();";
+		/*
 		$this->string .= "\n\t\t\$this->pog_query = \"select * from `".strtolower($this->objectName)."` where `co_".rtrim(strtolower($this->objectName),s)."`='\".intval(\$co_".rtrim(strtolower($this->objectName),s).").\"' LIMIT 1\";";
 		$this->string .= "\n\t\t\$cursor = Database::Reader(\$this->pog_query, \$connection);";
 		$this->string .= "\n\t\twhile (\$row = Database::Read(\$cursor))";
@@ -530,8 +553,19 @@ class ObjectController
 			$x++;
 		}
 		$this->string .= "\n\t\t}";
-		$this->string .= "\n\t\treturn \$this;";
-		$this->string .= "\n\t}";
+		$this->string .= "\n\t\treturn \$this;";*/
+		$this->string .= "\n}";
+	}
+	
+	// -------------------------------------------------------------
+	function CreateGetNewIDFunction()
+	{
+		$this->string .= "\n\t".$this->separator."\n";
+		$this->string .= $this->CreateComments("Gets object from database",array("integer \$co_".rtrim(strtolower($this->objectName),s).""),"object \$".$this->objectName);
+		$this->string .= "function GetNewID()\n{";
+		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
+		$this->string .="\n\tprint $".$this->objectName."->GetNewID();";
+		$this->string .= "\n}";
 	}
 
 	// -------------------------------------------------------------

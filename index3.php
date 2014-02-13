@@ -62,9 +62,10 @@ if (isset($_SESSION['objectString']))
 	}
 	
 	$zipfile = new createZip();
+	//print $zipfile -> addPOGPackage($package);
 	$zipfile -> addPOGPackage($package);
-	$zipfile -> forceDownload("pog.".time().".zip");
 	
+	$zipfile -> forceDownload("pog.".time().".zip");
 	$_POST = null;
 }
 else

@@ -20,6 +20,7 @@ class createZip  {
 	 */
 
 	function addDirectory($directoryName) {
+		//print $directoryName."<br>";
 		$directoryName = str_replace("\\", "/", $directoryName);
 
 		$feedArrayRow = "\x50\x4b\x03\x04";
@@ -180,30 +181,68 @@ class createZip  {
 	 * @param multi-d array $package
 	 * @param array $paths
 	 */
-	function addPOGPackage($package, $paths=array())
+	function addPOGPackage_($package, $paths=array())
 	{
-		
 		$i = 0;
 		foreach ($package as $key=>$value)
 		{
 			$path = '';
 			foreach ($paths as $p)
 			{
-				$path .= (($path == '') ? $p : "/$p");
+					$path .= (($path == '') ? $p : "/$p");
 			}
 			if (strpos($key, ".") == false)
 			{
-				$paths[] = $key;
-				$this->addDirectory((($path == '') ? "$key/" : "$path/$key/"));
-				$this->addPOGPackage($package[$key], &$paths);
+					$paths[] = $key;
+					$this->addDirectory((($path == '') ? "$key/" : "$path/$key/"));
+					//$this->addPOGPackage($package[$key], &$paths);
+					$this->addPOGPackage($package[$key], $paths);
 			}
 			else
 			{
-				$this->addFile(base64_decode($value), (($path == '') ? $key : "$path/$key"));
+					$this->addFile(base64_decode($value), (($path == '') ? $key : "$path/$key"));
 			}
 			if ($i == (sizeof($package)-1))
 			{
-				array_pop($paths);
+					array_pop($paths);
+			}
+			$i++;
+		}
+	}
+	
+	/**
+	 * Generates zip file from POG package.
+	 *
+	 * @param multi-d array $package
+	 * @param array $paths
+	 */
+	function addPOGPackage($package, $paths=array())
+	{
+		$i = 0;
+		foreach ($package as $key=>$value)
+		{
+			
+			$path = '';
+			foreach ($paths as $p)
+			{
+					$path .= (($path == '') ? $p : "/$p");
+			}
+			
+			if (strpos($key, ".") == false)
+			{
+					$paths[] = $key;
+					$this->addDirectory((($path == '') ? "$key/" : "$path/$key/"));
+					//$this->addPOGPackage($package[$key], $paths);
+			}
+			else
+			{
+				
+				$this->addFile(base64_decode($value), (($path == '') ? $key : "$path/$key"));
+				
+			}
+			if ($i == (sizeof($package)-1))
+			{
+					array_pop($paths);
 			}
 			$i++;
 		}

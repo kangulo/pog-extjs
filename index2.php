@@ -153,11 +153,6 @@ else if ($GLOBALS['configuration']['soapEngine'] == "phpsoap")
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.phpobjectgenerator.com/plog/rss/"/>
 		<link rel="shortcut icon" href="favicon.ico" >
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			_uacct = "UA-72762-1";
-			urchinTracker();
-		</script>
 	</head>
 	<body>
 		<div class="main">

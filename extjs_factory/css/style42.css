@@ -1,0 +1,149 @@
+.icon-user {
+    background-image: url(../images/icons/user.png) !important;
+}
+
+.icon-user-add {
+    background-image: url(../images/icons/user_add.gif) !important;
+}
+
+.icon-save {
+    background-image: url(../images/icons/save.png) !important;
+}
+
+.icon-calendar {
+    background-image: url(../images/icons/calendar.gif) !important;
+}
+
+.icon-reset {
+    background-image: url(../images/icons/stop.png) !important;
+}
+
+.icon-print {
+    background-image: url(../images/icons/imprimir.png) !important;
+}
+.icon-modificar {
+    background-image: url(../images/icons/edit.png) !important;
+}
+.icon-refresh {
+    background-image: url(../images/icons/reload.png) !important;
+}
+
+/* style rows on mouseover */
+        .x-grid-row-over .x-grid-cell-inner {
+            font-weight: bold;
+        }
+        /* shared styles for the ActionColumn icons */
+        .x-action-col-cell img {
+            height: 16px;
+            width: 16px;
+            cursor: pointer;
+        }
+        /* custom icon for the "buy" ActionColumn icon */
+        .x-action-col-cell img.icon-star {
+            background-image: url(../images/icons/star.png);
+        }
+        /* custom icon for the "alert" ActionColumn icon */
+        .x-action-col-cell img.alert-col {
+            background-image: url(../images/icons/error.png);
+        }
+
+        .x-ie6 .x-action-col-cell img.icon-star {
+            background-image: url(../images/icons/star.png);
+        }
+        .x-ie6.x-action-col-cell img.alert-col {
+            background-image: url(../images/icons/error.gif);
+        }
+
+        .x-ie6 .x-action-col-cell img {
+            position:relative;
+            top:-1px;
+        }
+
+.anulado { 
+	color: red;
+}
+
+.price-rise {
+ background-color: #color;
+}
+
+.icon-star {
+    background-image: url(../images/icons/star.png) !important;
+}
+.icon-star-grey {
+    background-image: url(../images/icons/star_grey.png) !important;
+}
+
+.icon-search {
+    background-image: url(../images/icons/search.png) !important;
+}
+
+.icon-anulado {
+    background-image: url(../images/icons/cancel.png) !important;
+}
+
+.icon-grid {
+    background-image: url(../images/icons/grid.png) !important;
+}
+
+.icon-add {
+    background-image: url(../images/icons/add.png) !important;
+}
+
+.icon-delete {
+    background-image: url(../images/icons/delete.png) !important;
+}
+.icon-upload {
+    background-image: url(../images/icons/up.png) !important;
+}
+.x-form-add-trigger
+{
+	width:17px;
+	height:21px;
+	border:0;
+	background:transparent url(../images/icons/gray-extend/form/add-trigger.gif) no-repeat 0 0 !important;
+	cursor:pointer;
+	/*border-bottom:1px solid #B5B8C8;*/
+	/*position:absolute;*/
+	top:0;
+}
+		
+.x-form-add-trigger-over{background-position:-17px 0 !important;}
+
+.x-panel-default-framed {
+    /*
+    background-color: #DFE9F6;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    */
+    border-style: none;
+    padding: 0px;
+}
+
+.producto-item {
+	padding: 5px 10px;
+	white-space: normal;
+	color: #555;
+	text-decoration: none;
+	display: block;
+	overflow: hidden;
+}
+
+.producto-item h3 {
+	display: block;
+	font: inherit;
+	/*font-weight: bold;*/
+	color: #222;
+}
+
+.producto-item h3 span {
+	float: right;
+	font-weight: normal;
+	margin:0 0 5px 5px;
+	width: 150px;
+	clear: none;
+}
+.x-panel-body-default {
+    /*background: none repeat scroll 0 0;*/
+}

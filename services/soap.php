@@ -247,8 +247,9 @@ function GenerateObject($objectName, $attributeList, $typeList,$renderList,$lang
 	}
 	$object = new Object($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);	
 	$object->BeginObject();	
-	$object->CreateMagicGetterFunction();
+	//$object->CreateMagicGetterFunction();
 	$object->CreateConstructor();
+	$object->CreateGetNewIDFunction();
 	$object->CreateGetFunction();
 	$object->CreateGetListFunction();
 	$object->CreateSaveFunction((in_array("HASMANY", $typeList) || in_array("JOIN", $typeList)));
@@ -341,10 +342,13 @@ function GenerateObjectController($objectName, $attributeList, $typeList,$render
 	$object = new ObjectController($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);
 	$object->BeginObject();	
 	$object->BuildActions();	
+	$object->CreateGetNewIDFunction();
+	$object->CreateGetFunction();
 	$object->CreateSaveFunction();	
 	$object->CreateSaveNewFunction();	
 	$object->CreateListFunction();	
 	$object->CreateDeleteFunction();	
+	
 	/*
 	 * $object->CreateMagicGetterFunction();
 	$object->CreateConstructor();
@@ -449,7 +453,7 @@ function GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList
 		$object->CreateGuardarFunction();
 		$object->CreateEliminarFunction();
 		//$object->EndObject();
-	}else{
+	}elseif ($extjsVersion  == 30) {
 		require_once "../extjs_factory/class.objectextjs3.1.php";	
 		$object = new ObjectExtjs($objectName,$attributeList,$typeList,$renderList,$pdoDriver, $language,$extjsVersion);
 		$object->BeginObject();
@@ -458,7 +462,12 @@ function GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList
 		//$object->CreateLayout();
 		//$object->Create();
 		//$object->EndObject();
+	}else{
+		require_once "../extjs_factory/class.objectextjs4.2.php";	
+		$object = new ObjectExtjs($objectName,$attributeList,$typeList,$renderList,$pdoDriver, $language,$extjsVersion);
+		$object->BeginObject();
 	}
+	
 	
 	return base64_encode($object->string);
 }
@@ -681,7 +690,7 @@ function GenerateConfiguration($wrapper = null, $pdoDriver = null, $db_encoding 
  * @param string $wrapper
  * @param string $pdoDriver
  */
-function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver = null, $db_encoding = 0, $extjsVersion)
+function GeneratePackage_($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver = null, $db_encoding = 0, $extjsVersion)
 {
 	require_once ("../include/configuration.php");
 	require_once ("../include/class.misc.php");
@@ -689,11 +698,11 @@ function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $la
 	$package = array();
 /*
 	$package = array();
-	$package["class"] = array();
-	$package["js"] = array();
-	$package["images"] = array();
-	$package["extjs"] = array();
-	$package["css"] = array();
+	$package["class"] = "class";
+	$package["js"] = "js";
+	$package["images"] = "Images";
+	$package["extjs"] = "Extjs";
+	$package["css"] = "Css";
 */
 	
 	//$package["setup"] = array();
@@ -702,7 +711,23 @@ function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $la
 
 	//generate configuration file
 	$package["configuration.php"] = GenerateConfiguration($wrapper, $pdoDriver, $db_encoding);
+	
+	$data = file_get_contents("../extjs_factory/readme.txt");	
+	$package["readme.txt"] = base64_encode($data);
 
+	if (strtolower($extjsVersion) == "31")
+	{
+		$data = file_get_contents("../extjs_factory/base31.html");
+	}
+	else
+	{
+		$data = file_get_contents("../extjs_factory/base30.html");
+	}
+	
+	$data = str_replace('objectExtjs', strtolower($objectName) , $data);
+	$data = str_replace('{fecha}', date('l jS \of F Y h:i:s A') , $data);
+	$package["".strtolower($objectName).".html"] = base64_encode($data);
+	
 	//generate objects
 
 	if (strtolower($language) == "php4")
@@ -720,17 +745,23 @@ function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $la
 	$data = str_replace('&versionNumber', $GLOBALS['configuration']['versionNumber'], $data);
 	$data = str_replace('&revisionNumber', $GLOBALS['configuration']['revisionNumber'], $data);
 	$data = str_replace('&language', strtoupper($language), $data);
+	$package["class"] = array();
 	$package["class"]["class.database.php"] = base64_encode($data);
 
 	// content of pog base
 	$data = file_get_contents("../object_factory/class.pog_base.".strtolower($language).".php");
 	$package["class"]["class.pog_base.php"] = base64_encode($data);
-	
+
+	// content of class folder
+	$package["class"]["class.".strtolower($objectName).".php"] =  GenerateObject($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver, $extjsVersion);
+		
 	// content of css
+	$package["css"] = array();
 	$data = file_get_contents("../extjs_factory/css/style.css");
 	$package["css"]["style.css"] = base64_encode($data);
 	
 	// content of images folder
+	$package["images"] = array();
 	$data = file_get_contents("../extjs_factory/icons/add.png");
 	$package["images"]["icons"]["add.png"] = base64_encode($data);
 	$data = file_get_contents("../extjs_factory/icons/delete.png");
@@ -742,32 +773,17 @@ function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $la
 	$data = file_get_contents("../extjs_factory/readme_extjs.txt");
 	$package["extjs"]["readme.txt"] = base64_encode($data);
 
-	// content of class folder
-	$package["class"]["class.".strtolower($objectName).".php"] =  GenerateObject($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver, $extjsVersion);
 
 	// the controller file is a bridge between Extjs and POG Classes
-	$package["controller.".strtolower($objectName).".php"] =  GenerateObjectController($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver,$extjsVersion);
-	
+	$package["controllers"] = array();
+	$package["controllers"]["controller.".strtolower($objectName).".php"] =  GenerateObjectController($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver,$extjsVersion);
+
 	// Pure Extjs JavaScript 
 	$package["js"]["xdatefield"]["xcheckbox.js"] =  base64_encode(file_get_contents("../extjs_factory/js/xdatefield/xcheckbox.js"));
 	$package["js"]["xdatefield"]["xdatefield.js"] =  base64_encode(file_get_contents("../extjs_factory/js/xdatefield/xdatefield.js"));
 	$package["js"]["".strtolower($objectName).".js"] =  GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList, $language, $wrapper, $pdoDriver,$extjsVersion);	
 	
-	if (strtolower($extjsVersion) == "31")
-	{
-		$data = file_get_contents("../extjs_factory/base31.html");
-	}
-	else
-	{
-		$data = file_get_contents("../extjs_factory/base30.html");
-	}
-	
-	$data = str_replace('objectExtjs', strtolower($objectName) , $data);
-	$data = str_replace('{fecha}', date('l jS \of F Y h:i:s A') , $data);
-	$package["".strtolower($objectName).".html"] = base64_encode($data);
 
-	$data = file_get_contents("../extjs_factory/readme.txt");	
-	$package["readme.txt"] = base64_encode($data);
 
 	//generate mapping object if necessary
 	$misc = new Misc(array());
@@ -888,10 +904,132 @@ function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $la
 	$data = file_get_contents("../plugin_factory/plugin.base64.php");
 	$package["plugins"]["plugin.base64.php"] = base64_encode($data);
 */
-
+	
+	$a = print_r($package,1);
+	//$a = $package;
+	//file_put_contents("test.txt", $a);
 	return serialize($package);
 }
 
+function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver = null, $db_encoding = 0, $extjsVersion)
+{
+	require_once ("../include/configuration.php");
+	require_once ("../include/class.misc.php");
+
+	$package = array();
+/*
+	$package = array();
+	$package["class"] = array();
+	$package["js"] = array();
+	$package["images"] = array();
+	$package["extjs"] = array();
+	$package["css"] = array();
+*/
+	
+	//$package["setup"] = array();
+	//$package["setup"]["setup_images"] = array();
+	//$package["setup"]["setup_library"] = array();
+
+	//generate configuration file
+	$package["configuration.php"] = GenerateConfiguration($wrapper, $pdoDriver, $db_encoding);
+	
+	if (strtolower($extjsVersion) == "31")
+	{
+		$data = file_get_contents("../extjs_factory/base31.html");
+	}
+	elseif (strtolower($extjsVersion) == "30")
+	{
+		$data = file_get_contents("../extjs_factory/base30.html");
+	}
+	else
+	{
+		$data = file_get_contents("../extjs_factory/base42.html");
+	}
+	
+	$data = str_replace('objectExtjs', strtolower($objectName) , $data);
+	$data = str_replace('{fecha}', date('l jS \of F Y h:i:s A') , $data);
+	$package["".strtolower($objectName).".html"] = base64_encode($data);
+
+	$data = file_get_contents("../extjs_factory/readme.txt");	
+	$package["readme.txt"] = base64_encode($data);
+
+	//generate objects
+
+	if (strtolower($language) == "php4")
+	{
+		$data = file_get_contents("../object_factory/class.database.php4.php");
+	}
+	else if (strtolower($language) == "php5" || (strtolower($language) == "php5.1" && strtolower($wrapper) == "pog"))
+	{
+		$data = file_get_contents("../object_factory/class.database.php5.php");
+	}
+	else
+	{
+		$data = file_get_contents("../object_factory/class.database.php5.1.php");
+	}
+	$data = str_replace('&versionNumber', $GLOBALS['configuration']['versionNumber'], $data);
+	$data = str_replace('&revisionNumber', $GLOBALS['configuration']['revisionNumber'], $data);
+	$data = str_replace('&language', strtoupper($language), $data);
+	$package["class/class.database.php"] = base64_encode($data);
+
+	// content of pog base
+	$data = file_get_contents("../object_factory/class.pog_base.".strtolower($language).".php");
+	$package["class/class.pog_base.php"] = base64_encode($data);
+
+	// content of class folder
+	$package["class/class.".strtolower($objectName).".php"] =  GenerateObject($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver, $extjsVersion);	
+	
+	// content of css
+	if (strtolower($extjsVersion) == "31")
+	{
+		$data = file_get_contents("../extjs_factory/css/style.css");
+	}
+	elseif (strtolower($extjsVersion) == "30")
+	{
+		$data = file_get_contents("../extjs_factory/css/style.css");
+	}
+	else
+	{
+		$data = file_get_contents("../extjs_factory/css/style42.css");
+	}
+	$package["css/style.css"] = base64_encode($data);
+	
+	// content of class folder
+	$data = file_get_contents("../extjs_factory/readme_extjs.txt");
+	$package["extjs/readme.txt"] = base64_encode($data);
+	
+	// the controller file is a bridge between Extjs and POG Classes
+	$package["controllers/controller.".strtolower($objectName).".php"] =  GenerateObjectController($objectName, $attributeList, $typeList,$renderList, $language, $wrapper, $pdoDriver,$extjsVersion);
+	
+	// content of images folder
+	$data = file_get_contents("../extjs_factory/icons/add.png");
+	$package["images/icons/add.png"] = base64_encode($data);
+	$data = file_get_contents("../extjs_factory/icons/delete.png");
+	$package["images/icons/delete.png"] = base64_encode($data);
+	$data = file_get_contents("../extjs_factory/icons/save.png");
+	$package["images/icons/save.png"] = base64_encode($data);
+	$data = file_get_contents("../extjs_factory/icons/cancel.png");
+	$package["images/icons/cancel.png"] = base64_encode($data);
+		
+	// Pure Extjs JavaScript 
+	$package["js/xdatefield/xcheckbox.js"] =  base64_encode(file_get_contents("../extjs_factory/js/xdatefield/xcheckbox.js"));
+	$package["js/xdatefield/xdatefield.js"] =  base64_encode(file_get_contents("../extjs_factory/js/xdatefield/xdatefield.js"));
+	$package["js/".strtolower($objectName).".js"] =  GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList, $language, $wrapper, $pdoDriver,$extjsVersion);	
+	
+
+
+	//generate mapping object if necessary
+	$misc = new Misc(array());
+	foreach ($typeList as $key => $type)
+	{
+		if ($type == "JOIN")
+		{
+			$package["class.".strtolower($misc->MappingName($objectName, $attributeList[$key])).".php"] =  GenerateMapping($objectName, $attributeList[$key], $language, $wrapper, $pdoDriver);
+		}
+	}
+
+	return serialize($package);
+}
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
 $server->service($HTTP_RAW_POST_DATA);
 ?>

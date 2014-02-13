@@ -248,6 +248,7 @@ h2 {
 				<select class="s" name="extjsVersion" id="extjsVersion">				
 					<option value="31" <?=($misc->GetVariable('extjsVersion') != null && $misc->GetVariable('extjsVersion')=="31"?"selected":"")?>>Row Editor</option>
 					<option value="30" <?=($misc->GetVariable('extjsVersion') != null && $misc->GetVariable('extjsVersion')=="30"?"selected":"")?>>Form Binding</option>
+					<option value="42" <?=($misc->GetVariable('extjsVersion') != null && $misc->GetVariable('extjsVersion')=="42"?"selected":"")?>>Form Binding 4.2</option>
 				</select>
 			</span><br><br>
 			<span class="line">

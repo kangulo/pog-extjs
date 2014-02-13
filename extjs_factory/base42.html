@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<title>CRUD Generado por ExtJS 4.2 CRUD GENERATOR v0.1 BETA {fecha} </title>
+
+<!-- ** CSS ** -->
+<!-- base library -->
+<link rel="stylesheet" type="text/css" href="extjs-4.2/resources/ext-theme-neptune/ext-theme-neptune-all-rtl-debug.css"/>
+<link rel="stylesheet" type="text/css" href="extjs-4.2/examples/desktop/css/desktop.css" />
+
+<!-- page specific -->
+<link rel="stylesheet" type="text/css" href="css/style.css"  />
+
+<!-- ExtJS library: all widgets MOODE: DEBUG -->
+<script type="text/javascript" src="extjs-4.2/ext-all-debug.js"></script> 
+
+<!-- ExtJS library: localization spanish -->
+<script type="text/javascript" src="extjs-4.2/locale/ext-lang-es.js"></script>
+
+<!-- extensions library to use Grid Filtering
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/menu/RangeMenu.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/menu/ListMenu.js"></script>
+
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/GridFilters.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/Filter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/StringFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/DateFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/ListFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/NumericFilter.js"></script>
+<script type="text/javascript" src="extjs/examples/ux/gridfilters/filter/BooleanFilter.js"></script>
+-->
+
+<!-- Pagina JS del CRUD -->
+<script type="text/javascript" src="js/objectExtjs.js"></script>
+
+<!-- Estilos del un combo-add TODO: Colocar la opcion en el combo de tipos de controles -->
+<style>
+.x-form-add-trigger
+	{
+	width:17px;
+	height:21px;
+	border:0;
+	background:transparent url(images/gray-extend/form/add-trigger.gif) no-repeat 0 0 !important;
+	cursor:pointer;
+	border-bottom:1px solid #B5B8C8;
+	position:absolute;
+	top:0;
+	}
+	
+.x-form-add-trigger-over{background-position:-17px 0 !important;}
+#loading-mask{
+	position:absolute;
+	left:0;
+	top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    background-color:white;
+}
+#loading{
+	position:absolute;
+	left:45%;
+	top:40%;
+	padding:2px;
+	z-index:20001;
+    height:auto;
+}
+#loading img {
+    margin-bottom:5px;
+}
+.save-icon{background:transparent url(images/icons/add.png) 0 0 no-repeat !important;}
+.delete-icon{background:transparent url(images/icons/delete.png) 0 0 no-repeat !important;}
+</style>
+</head>
+
+<body>	
+<!-- Mascara de Espera de Carga del formulario  -->
+  <h1>ExtJS+POG Form Binding para ExtJS 4.2</h1>
+    <p>Este ejemplo demuestra que se puede crear un formulario rapidamente usando ExtJS y POG.</p>
+	<div id="content"></div>
+</body>
+</html>

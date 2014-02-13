@@ -83,7 +83,7 @@ class Object
 		}
 		//	create attribute => type array map
 		//	needed for setup
-		$this->string .= "public \$pog_attribute_type = array(\n\t\t";
+		$this->string .= "private \$pog_attribute_type = array(\n\t\t";
 		$this->string .= "\"co_".rtrim(strtolower($this->objectName),s)."\" => array('db_attributes' => array(\"NUMERIC\", \"INT\")),\n\t\t";
 		$x = 0;
 		foreach ($this->attributeList as $attribute)
@@ -92,7 +92,7 @@ class Object
 			$x++;
 		}
 		$this->string .= ");\n\t";
-		$this->string .= "public \$pog_query;";
+		$this->string .= "private \$pog_query;";
 	}
 
 	// -------------------------------------------------------------
@@ -583,17 +583,40 @@ class Object
 	}
 
 	// -------------------------------------------------------------
+	function CreateGetNewIDFunction()
+	{
+		$this->string .= "\n\t".$this->separator."\n\t";
+		$this->string .= $this->CreateComments("Gets New ID record from database",array("integer \$co_".rtrim(strtolower($this->objectName),s).""),"object \$".$this->objectName);
+		$this->string .="\tfunction GetNewID()\n\t{";
+		$this->string .= "\n\t\t\$connection = Database::Connect();";
+		$this->string .= "\n\t\t\$co_".rtrim(strtolower($this->objectName),s)." = 0;";
+		$this->string .= "\n\t\t\$this->pog_query = \"select max(`co_".rtrim(strtolower($this->objectName),s)."`) as co_".rtrim(strtolower($this->objectName),s)." from `".strtolower($this->objectName)."`\";";
+		$this->string .= "\n\t\t\$cursor = Database::Reader(\$this->pog_query, \$connection);";
+		$this->string .= "\n\t\twhile (\$row = Database::Read(\$cursor))";
+		$this->string .= "\n\t\t{";
+		$this->string .= "\n\t\t\t\$co_".rtrim(strtolower($this->objectName),s)." = \$row['co_".rtrim(strtolower($this->objectName),s)."'];";
+		$this->string .= "\n\t\t}";
+		$this->string .= "\n\t\t\$aux_co_".rtrim(strtolower($this->objectName),s)." = \$co_".rtrim(strtolower($this->objectName),s)."+1;";
+		$this->string .= "\n\t\t\$result[\"success\"] = true;";
+		$this->string .= "\n\t\t\$result[\"lastid\"] = \$aux_co_".rtrim(strtolower($this->objectName),s).";";
+		$this->string .= "\n\t\treturn json_encode(\$result);";
+		$this->string .= "\n\t}";
+	}
+	
+	// -------------------------------------------------------------
 	function CreateGetFunction()
 	{
 		$this->string .= "\n\t".$this->separator."\n\t";
 		$this->string .= $this->CreateComments("Gets object from database",array("integer \$co_".rtrim(strtolower($this->objectName),s).""),"object \$".$this->objectName);
-		$this->string .="\tfunction Get(\$co_".rtrim(strtolower($this->objectName),s).")\n\t{";
+		$this->string .="\tfunction Get()\n\t{";
 		$this->string .= "\n\t\t\$connection = Database::Connect();";
-		$this->string .= "\n\t\t\$this->pog_query = \"select * from `".strtolower($this->objectName)."` where `co_".rtrim(strtolower($this->objectName),s)."`='\".intval(\$co_".rtrim(strtolower($this->objectName),s).").\"' LIMIT 1\";";
+		$this->string .= "\n\t\t\$thisObjectName = get_class(\$this);";
+		$this->string .= "\n\t\t\$this->pog_query = \"select * from `".strtolower($this->objectName)."` where `co_".rtrim(strtolower($this->objectName),s)."`='\".\$this->co_".rtrim(strtolower($this->objectName),s).".\"' LIMIT 1\";";
 		$this->string .= "\n\t\t\$cursor = Database::Reader(\$this->pog_query, \$connection);";
 		$this->string .= "\n\t\twhile (\$row = Database::Read(\$cursor))";
 		$this->string .= "\n\t\t{";
-		$this->string .= "\n\t\t\t\$this->co_".rtrim(strtolower($this->objectName),s)." = \$row['co_".rtrim(strtolower($this->objectName),s)."'];";
+		$this->string .= "\n\t\t\t\$".strtolower($this->objectName)." = new \$thisObjectName();";
+		$this->string .= "\n\t\t\t\$".strtolower($this->objectName)."->co_".rtrim(strtolower($this->objectName),s)." = \$row['co_".rtrim(strtolower($this->objectName),s)."'];";
 		$x = 0;
 		foreach ($this->attributeList as $attribute)
 		{
@@ -603,22 +626,27 @@ class Object
 				{
 					if ($this->typeList[$x] == "BELONGSTO")
 					{
-						$this->string .= "\n\t\t\t\$this->co_".rtrim(strtolower($attribute,s))." = \$row['co_".rtrim(strtolower($attribute,s))."'];";
+						$this->string .= "\n\t\t\t\$".strtolower($this->objectName)."->co_".rtrim(strtolower($attribute,s))." = \$row['co_".rtrim(strtolower($attribute,s))."'];";
 					}
 					else
 					{
-						$this->string .= "\n\t\t\t\$this->".$attribute." = \$row['".strtolower($attribute)."'];";
+						$this->string .= "\n\t\t\t\$".strtolower($this->objectName)."->".$attribute." = \$row['".strtolower($attribute)."'];";
 					}
 				}
 				else
 				{
-					$this->string .= "\n\t\t\t\$this->".$attribute." = \$this->Unescape(\$row['".strtolower($attribute)."']);";
+					$this->string .= "\n\t\t\t\$".strtolower($this->objectName)."->".$attribute." = \$this->Unescape(\$row['".strtolower($attribute)."']);";
 				}
 			}
 			$x++;
 		}
+		$this->string .= "\n\t\t\t\$".strtolower($this->objectName)."List[\"data\"][] = \$".strtolower($this->objectName).";";
 		$this->string .= "\n\t\t}";
-		$this->string .= "\n\t\treturn \$this;";
+		$this->string .= "\n\t\t$".strtolower($this->objectName)."List[\"rows\"] = \$row_count;";
+		$this->string .= "\n\t\t$".strtolower($this->objectName)."List[\"success\"] = true;";
+		$this->string .= "\n\t\t$".strtolower($this->objectName)."List[\"message\"] = \"Registros Cargados Exitosamente\";";
+		$this->string .= "\n\t\t$".strtolower($this->objectName)."List[\"sql\"] = \$this->pog_query;";
+		$this->string .= "\n\t\tprint json_encode(\$".strtolower($this->objectName)."List);";
 		$this->string .= "\n\t}";
 	}
 
