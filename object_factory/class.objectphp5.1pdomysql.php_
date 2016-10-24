@@ -144,7 +144,7 @@ class Object
 			}
 			else if ($this->typeList[$x] != "HASMANY" && $this->typeList[$x] != "JOIN")
 			{
-				$this->sql .= "\n\t`".strtolower($attribute)."` ".stripcslashes($this->typeList[$x])." NOT NULL,";
+				$this->sql .= "\n\t`".$attribute."` ".stripcslashes($this->typeList[$x])." NOT NULL,";
 			}
 			$x++;
 		}

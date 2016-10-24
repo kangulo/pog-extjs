@@ -1,447 +1,248 @@
 <?php
 /**
-* @author  Joel Wan & Mark Slemko.  Designs by Jonathan Easton
-* @link  http://www.phpobjectgenerator.com
-* @copyright  Offered under the  BSD license
-* @abstract  Php Object Generator  automatically generates clean and tested Object Oriented code for your PHP4/PHP5 application.
+* @author  Kevin Angulo <kevinangulo@gmail.com> - Kayak Innovations, C.A. 
+* @link  http://pogextjs.comyr.com/
+* @copyright  Offered under the  BSD license- Kayak Innovations, C.A.
+* @abstract  Php Object Generator automatically generates clean and tested Object Oriented code for your PHP4/PHP5 application.
 */
 include "./include/class.misc.php";
 include "./include/configuration.php";
-
-$misc = new Misc(array());
-session_cache_limiter('nocache');
-$cache_limiter = session_cache_limiter();
-session_start();
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', FALSE);
-header('Pragma: no-cache');
-header('Expires: 0');
-
-if ($misc->GetVariable('objectName')!= null)
-{
-	$objectName = $misc->GetVariable('objectName');
-}
-if ($misc->GetVariable('attributeList') != null)
-{
-	if (isset($_GET['attributeList']))
-		eval ("\$attributeList =". stripcslashes(urldecode($_GET['attributeList'])).";");
-	else
-		@$attributeList=unserialize($_SESSION['attributeList']);
-}
-if ($misc->GetVariable('typeList') != null)
-{
-	if (isset($_GET['typeList']))
-	{
-		if (ini_get('magic_quotes_gpc') == true)		
-		{
-			$typeList = stripcslashes(urldecode($_GET['typeList']));
-		}
-		else
-		{
-			$typeList = urldecode($_GET['typeList']);
-		}
-		if (ini_get('magic_quotes_gpc') == true)
-		{
-			$typeList = stripcslashes(urldecode($_GET['typeList']));
-		}
-		else
-		{
-			$typeList = urldecode($_GET['typeList']);
-		}
-		eval ("\$typeList =".trim($typeList).";");
-		for($i=0; $i<sizeof($typeList); $i++)
-		{
-			$typeList[$i] = stripcslashes($typeList[$i]);
-		}
-	}
-	else
-	{
-		@$typeList = unserialize($_SESSION['typeList']);
-		if (count($typeList) == 0)
-		{
-			$typeList = null;
-		}
-	}
-}
-if ($misc->GetVariable('renderList') != null)
-{
-	if (isset($_GET['renderList']))
-	{
-		if (ini_get('magic_quotes_gpc') == true)		
-		{
-			$renderList = stripcslashes(urldecode($_GET['renderList']));
-		}
-		else
-		{
-			$renderList = urldecode($_GET['renderList']);
-		}
-		if (ini_get('magic_quotes_gpc') == true)
-		{
-			$renderList = stripcslashes(urldecode($_GET['renderList']));
-		}
-		else
-		{
-			$renderList = urldecode($_GET['renderList']);
-		}
-		eval ("\$renderList =".trim($renderList).";");
-		for($i=0; $i<sizeof($renderList); $i++)
-		{
-			$renderList[$i] = stripcslashes($renderList[$i]);
-		}
-	}
-	else
-	{
-		@$renderList = unserialize($_SESSION['renderList']);
-		if (count($renderList) == 0)
-		{
-			$renderList = null;
-		}
-	}
-}
-$pdoDriver = ($misc->GetVariable('pdoDriver')!=null?$misc->GetVariable('pdoDriver'):'mysql');
-/*
-print !isset($renderList[0]) ? "no" : "si";
-print $renderList[2];
-*/
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<link rel="stylesheet" href="./phpobjectgenerator.css" type="text/css" />
-<link rel="shortcut icon" href="favicon.ico" >
-<title>Php Object Generator (v<?=$GLOBALS['configuration']['versionNumber']?><?=$GLOBALS['configuration']['revisionNumber']?>) - Open Source ExtJs Code Generator</title>
-<script src="./pog.js" type="text/javascript"></script>
-<SCRIPT LANGUAGE="JavaScript">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Php Object Generator (v<?=$GLOBALS['configuration']['versionNumber']?><?=$GLOBALS['configuration']['revisionNumber']?>) - Open Source ExtJs Code Generator</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="css/carousel.css" rel="stylesheet">
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">POG + ExtJS</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="contact.php">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" src="img/slide-01.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>What is POG+ExtJS?</h1>
+              <p class="lead">Is a RAD tool that will save you time of development, it can make a simple web application or a group of them, using <a href='http://www.phpobjectgenerator.com'>POG Php Object Generator</a> + <a href="http://www.sencha.com/products/extjs/" target="_blank">ExtJS</a> Javascript Framework to make since database table to interface in easy way and quickly just doing a couple of clicks.</p>
+              <p>
+				  <a class="btn btn-lg btn-primary" href="#" role="button"><span class='icons icons-medium'>h</span> Learn More</a>&nbsp;
+				  <a class="btn btn-lg btn-success" href="#opciones" role="button"><span class='glyphicon glyphicon-play'></span> Get Started</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" src="img/slide-02.jpg" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Do it simple, fast and clean in less time.</h1>
+              <p class="lead">Generates ExtJS Applications fully functionally with clean and tested code for ExtJS Applications and you can choose from several kind of CRUD forms, also has support for differents ExtJS versions. ExtJS code, Php Classes and Controller even a structure definition of the database table.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button"><span class='icons icons-medium'>h</span> Learn More</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img data-src="holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" src="img/slide-03.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Generates Php Code</h1>
+              <p>POG+ExtJS works with MVC Model, Create Php Classes and Controller for databases objects with CRUD methods. Based in <a href='http://www.phpobjectgenerator.com' target='_blank'>POG</a> code, POG+ExtJS create all files and you can download it and just paste the files in your www directory and ready!</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button"><span class='icons icons-medium'>h</span> Learn More</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img data-src="holder.js/900x500/auto/#444:#4a4a4a/text:Four slide" src="img/slide-04.jpg" alt="Four slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Free Open Source.</h1>
+              <p>For everyone in the community who wants to improve this tool, to make into something that allows us to create easily prototype form with ExtJS as FrontEnd in the Client-Side and <a href="http://www.php.net/" target="_balnk">Php</a> + <a href="http://www.mysql.com" target="_balnk">Mysql</a> in the Server-Side.</p>
+              <p>
+			  <a class="btn btn-lg btn-primary" href='https://github.com/kangulo/pog-extjs' target='_blank' role="button"><span class='icons-medium icon-github'></span> Github Repository</a>&nbsp;
+              <a class="btn btn-lg btn-success" href='https://github.com/kangulo/pog-extjs/archive/master.zip' target='_blank' role="button"><span class="glyphicon glyphicon-cloud-download"></span> Download Now!</a>
+              </p>              
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div><!-- /.carousel -->
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4">
+		  <h1 class="icons icons-giant icons-rounded">/</h1>
+          <h2>All in One</h2>          
+          <p class="text-justify">Everything you need in one package including three powerful tools:</p>
+          <ul class="text-justify">
+			<li><strong>ExtJS</strong> specially designed for web-based interface applicacions, to build the front-end.</li>
+			<li><strong>Php</strong> for manage database objects and classes.</li>
+			<li><strong>MySQL</strong> as database manager.</li>
+		  </ul>
+          <p><a class="btn btn-default" href="http://www.sencha.com/products/extjs/" role="button" target="_blank">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->        
+        <div class="col-lg-4">
+          <h1 class="icons icons-giant icons-rounded">K</h1>
+          <h2>Save Time</h2>
+          <p>POG+ExtJS generates more than 1000 automatically code lines for you. Also you can forget about syntax errors. The time you save can be spent on more interesting areas of your project.<br> Once you got your product you can do changes and improvements.</p>
+          <p><a class="btn btn-default" href="http://www.php.net/" role="button" target="_blank">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->        
+        <div class="col-lg-4">
+		  <h1 class="icons icons-giant icons-rounded">j</h1>          
+          <h2>Improving your productivity</h2>
+          <p>Make quickly prototype for applications, just in minutes, with the basic operations like create, read, update and destroy or delete.
+          <br>By generating PHP objects with integrated CRUD methods plus ExtJS interface, POG+ExtJS gives you a head start in any project.</p>
+          <p><a class="btn btn-default" href="http://www.mysql.com" role="button" target="_blank">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+
+      <!-- START THE FEATURETTES -->
+	<section id='opciones'>
+      <hr class="featurette-divider">
+      
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading" style="margin-top: 30px;">RowEditor Grid.</h2><span class="label label-success">ExtJS v3.2</span>
+          <p class="lead">A RESTful Store with JsonWriter which automatically generates CRUD requests to the server with some plugins: RowEditor &amp; Filtering.</p>
+          <a class="btn btn-small btn-primary" href="generator.php?extjsVersion=31#object-section" type="button"><span class='glyphicon glyphicon-play'></span> Try it!</a>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" src="img/RowEditor.png" alt="Generic placeholder image">
+        </div>
+      </div>
+	  <p></p>
+	  <p class="pull-right"><a href="#">Back to top</a></p>
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" data-src="holder.js/656x468/auto" src="img/FormBinding.png" alt="Generic placeholder image">
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading" style="margin-top: 30px;">FormBinding.</h2><span class="label label-success">ExtJS v3.+</span>
+          <p class="lead">A grid embedded within a FormPanel that automatically loads records into the form on row selection.</p>
+          <a class="btn btn-small btn-primary" href="generator.php?extjsVersion=30#object-section" type="button"><span class='glyphicon glyphicon-play'></span> Try it!</a>
+        </div>
+      </div>
+	  <p></p>
+	  <p class="pull-right"><a href="#">Back to top</a></p>
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading" style="margin-top: 30px;">FormBinding 4.2 <small><small><span class="text-success new">New!</span></small></small> </h2>
+		  <span class="label label-success">ExtJS v4.+</span> 
+          <p class="lead">A grid embedded within a FormPanel that automatically loads records into the form on row selection. With Neptune Theme</p>
+          <a class="btn btn-small btn-primary" href="generator.php?extjsVersion=42#object-section" type="button"><span class='glyphicon glyphicon-play'></span> Try it!</a>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" src="img/FormBinding42.png" alt="Generic placeholder image">
+        </div>
+      </div>
+      <p></p>
+	  <p class="pull-right"><a href="#">Back to top</a></p>
+      <hr class="featurette-divider">
+      
+      <div class="row featurette">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" data-src="holder.js/656x468/auto" src="img/FormBinding.png" alt="Generic placeholder image">
+        </div>
+        <div class="col-md-7">
+            <h2 class="featurette-heading" style="margin-top: 30px;">Responsive Design</h2><span class="label label-success">Jquery</span>&nbsp;<span class="label label-success">Bootstrap</span>
+          <p class="lead">Mode Listview with action buttons per record</p>
+          <a class="btn btn-small btn-primary" href="generator.php?extjsVersion=JQB#object-section" type="button"><span class='glyphicon glyphicon-play'></span> Try it!</a>
+        </div>
+      </div>
+	  <p></p>
+	  <p class="pull-right"><a href="#">Back to top</a></p>
+      <hr class="featurette-divider">
+	</section>
+      <!-- /END THE FEATURETTES -->
+
+
+      <!-- FOOTER -->
+      <footer>
 <!--
- function nameDefined(ckie,nme)
-{
-   var splitValues
-   var i
-   for (i=0;i<ckie.length;++i)
-   {
-      splitValues=ckie[i].split("=")
-      if (splitValues[0]==nme) return true
-   }
-   return false
-}
+        <p class="pull-right"><a href="#">Back to top</a></p>
+-->
+        <p><a href="mailto:kevinangulo@gmail.com">Kevin Angulo</a> &middot; &copy; 2014 Kayak Innovations,C.A. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
 
-function delBlanks(strng)
-{
-   var result=""
-   var i
-   var chrn
-   for (i=0;i<strng.length;++i) {
-      chrn=strng.charAt(i)
-      if (chrn!=" ") result += chrn
-   }
-   return result
-}
-function getCookieValue(ckie,nme)
-{
-   var splitValues
-   var i
-   for(i=0;i<ckie.length;++i) {
-      splitValues=ckie[i].split("=")
-      if(splitValues[0]==nme) return splitValues[1]
-   }
-   return ""
-}
-function insertCounter() {
- readCookie()
- displayCounter()
-}
- function displayCounter() {
- document.write('<H3 ALIGN="CENTER">')
- document.write("You've visited this page ")
- if(counter==1) document.write("the first time.")
- else document.write(counter+" times.")
- document.writeln('</H3>')
- }
-function readCookie() {
- var cookie=document.cookie
- counter=0
- var chkdCookie=delBlanks(cookie)  //are on the client computer
- var nvpair=chkdCookie.split(";")
- if(nameDefined(nvpair,"pageCount"))
- counter=parseInt(getCookieValue(nvpair,"pageCount"))
- ++counter
- var futdate = new Date()
- var expdate = futdate.getTime()
- expdate += 3600000 * 24 *30  //expires in 1 hour
- futdate.setTime(expdate)
+    </div><!-- /.container -->
 
- var newCookie="pageCount="+counter
- newCookie += "; expires=" + futdate.toGMTString()
- window.document.cookie=newCookie
-}
-// -->
-</SCRIPT>
-<style>
-body {
-	font-family:helvetica,tahoma,verdana,sans-serif;
-	padding:20px;
-    padding-top:32px;
-    font-size:13px;
-	background-color:#fff !important;
-}
-p {
-	margin-bottom:15px;
-}
-h1 {
-	font-size:large;
-	margin-bottom:20px;
-}
-h2 {
-	font-size:14px;
-    color:#333;
-    font-weight:bold;
-    margin:10px 0;
-}
-</style>
 
-</head>
-<body>
-	<div class="greyboxes">
-	<h1>POG+ExtJS Code Generator v3.0d</h1>
-	<br><br>
-	<div>You are the visitor number <?php include "./include/header.inc.php"; ?></div>
-	<div><h2>For now just work selecting language Php5.1 and MySQL </h2></div>
-	</div>
-	<form method="post" action="index2.php">
-		
-		<div class="greyboxes">
-			<span class="line">
-				<img src="./images/generar_para.jpg" alt="object attribute" width="200" height="18"/>
-				<select class="s" name="language" id="FirstField" onchange="CascadePhpVersion()">
-				<option value="php5" <?=($misc->GetVariable('language') != null && $misc->GetVariable('language')=="php5"?"selected":"")?>>PHP 5</option>
-				<option value="php5.1" <?=($misc->GetVariable('language') != null && $misc->GetVariable('language')=="php5.1"?"selected":"")?>>PHP 5.1+</option>
-				<option value="php4" <?=($misc->GetVariable('language') != null && $misc->GetVariable('language')=="php4"?"selected":"")?>>PHP 4</option>
-				</select>
-			</span><br><br>
-			<span class="line">
-				<img src="./images/capa_basedatos.jpg" alt="object attribute" width="200" height="18"/>
-				<select class="s" name="wrapper" id="wrapper" onchange="IsPDO()">
-					<option value="POG"  <?= ($misc->GetVariable('wrapper') != null&& strtoupper($misc->GetVariable('wrapper'))=="POG"?"selected":"")?>>POG</option>
-					<?
-					if (($misc->GetVariable('wrapper') != null&& strtoupper($misc->GetVariable('wrapper'))=="PDO"))
-					{
-					?>
-						<option value="PDO" <?= ($misc->GetVariable('wrapper') != null&& strtoupper($misc->GetVariable('wrapper'))=="PDO"?"selected":"")?>>PDO</option>
-					<?
-					}
-					?>
-				</select>
-				<select class="s" name="pdoDriver" id="PDOdriver" style="display:<?= ($misc->GetVariable('wrapper') != null&& strtoupper($misc->GetVariable('wrapper'))=="PDO"?"inline":"none")?>">
-					<option value="mysql" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="mysql"?"selected":"")?>>MYSQL</option>
-					<!--<option value="oci" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="oci"?"selected":"")?>>OCI</option>-->
-					<!--<option value="dblib" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="dblib"?"selected":"")?>>DBLIB</option>-->
-					<!--untested pdo drivers have been commented out. uncomment once they are tested-->
-					<!--<option value="firebird" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="firebird"?"selected":"")?>>FIREBIRD</option>
-					<option value="odbc" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="odbc"?"selected":"")?>>ODBC</option>
-					<option value="pgsql" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="pgsql"?"selected":"")?>>PGSQL</option>
-					<option value="sqlite" <?= ($misc->GetVariable('pdoDriver') != null&& $misc->GetVariable('pdoDriver')=="sqlite"?"selected":"")?>>SQLITE</option>-->
-				</select>
-			</span><br><br>
-			<span class="line">
-				<img src="./images/tipo_crud.jpg" alt="object attribute" width="200" height="18"/>
-				<select class="s" name="extjsVersion" id="extjsVersion">				
-					<option value="31" <?=($misc->GetVariable('extjsVersion') != null && $misc->GetVariable('extjsVersion')=="31"?"selected":"")?>>Row Editor</option>
-					<option value="30" <?=($misc->GetVariable('extjsVersion') != null && $misc->GetVariable('extjsVersion')=="30"?"selected":"")?>>Form Binding</option>
-					<option value="42" <?=($misc->GetVariable('extjsVersion') != null && $misc->GetVariable('extjsVersion')=="42"?"selected":"")?>>Form Binding 4.2</option>
-				</select>
-			</span><br><br>
-			<span class="line">
-				<img src="./images/nombre_crud.jpg" alt="object attribute" width="200" height="18"/>
-				<input type="text" id="objName" name="object" class="i" value="<?=(isset($objectName)?$objectName:'')?>"/>
-			</span><br><br>
-		</div>
-		
-		<div class="greybox">
-			<table width="100%" >
-				<tr><td align=center><H2>Field</H2> </td>
-				<td align=center><H2>POG</H2></td>
-				<td align=center><H2>ExtJS</H2></td></tr>			
-			</table>
-		</div>
-		<div class="greybox">
-			<span class="line">
-				<img src="./images/atributo.jpg" alt="object attribute" width="70" height="18"/>
-				<input  type="text" name="fieldattribute_1" class="i" value="<?=(isset($attributeList)&&isset($attributeList[0])?$attributeList[0]:'')?>" onkeydown="javascript:Reposition(this,event);"></input>
-				<img src="./images/tipo.jpg" alt="object attribute" width="75" height="18"/>
-				<select class="s" style="display:<?=(!isset($typeList[0])||$misc->TypeIsKnown($typeList[0]) ?"inline":"none")?>" onchange="ConvertDDLToTextfield('type_1')" name="type_1" id="type_1">
-                	<?
-                		$dataTypeIndex = 0;
-						eval("include \"./include/datatype.".$pdoDriver.".inc.php\";");
-					?>
-                </select><input style="display:<?=(!isset($typeList[0])||$misc->TypeIsKnown($typeList[0])?"none":"inline")?>" type="text" name="ttype_1" class="i" id="ttype_1" value="<?=(isset($typeList)&&isset($typeList[0])&&!$misc->TypeIsKnown($typeList[0])?$typeList[0]:'')?>"></input>
-				<img src="./images/render.jpg" alt="object attribute" width="80" height="18"/>
-				<select class="s" style="display:<?=(!isset($renderList[0])||$misc->RenderTypeIsKnown($renderList[0]) ?"inline":"none")?>" name="render_1" id="render_1">
-                	<?
-                		$dataRenderIndex = 0;
-						eval("include \"./include/rendertype.extjs.inc.php\";");
-					?>
-				</select>
-			</span><br/><br/>
-			<span class="line">
-				<img src="./images/atributo.jpg" alt="object attribute" width="70" height="18"/>
-				<input  type="text" name="fieldattribute_2" class="i" value="<?=(isset($attributeList)&&isset($attributeList[1])?$attributeList[1]:'')?>" onkeydown="javascript:Reposition(this,event);"></input>
-				<img src="./images/tipo.jpg" alt="object attribute" width="75" height="18"/>
-				<select class="s" style="display:<?=(!isset($typeList[1])||$misc->TypeIsKnown($typeList[1]) ?"inline":"none")?>" onchange="ConvertDDLToTextfield('type_2')" name="type_2" id="type_2">
-                	<?
-                		$dataTypeIndex = 1;
-						eval("include \"./include/datatype.".$pdoDriver.".inc.php\";");
-					?>
-                </select>
-				<input style="display:<?=(!isset($typeList[1])||$misc->TypeIsKnown($typeList[1])?"none":"inline")?>" type="text" name="ttype_2" class="i" id="ttype_2" value="<?=(isset($typeList)&&isset($typeList[1])&&!$misc->TypeIsKnown($typeList[1])?$typeList[1]:'')?>"></input>
-				<img src="./images/render.jpg" alt="object attribute" width="80" height="18"/>
-				<select class="s" style="display:<?=(!isset($renderList[1])||$misc->RenderTypeIsKnown($renderList[1]) ?"inline":"none")?>" name="render_2" id="render_2">
-                	<?
-                		$dataRenderIndex = 1;
-						eval("include \"./include/rendertype.extjs.inc.php\";");
-					?>
-				</select>
-			</span><br/><br/>
-			<span class="line">
-				<img src="./images/atributo.jpg" alt="object attribute" width="70" height="18"/>
-				<input  type="text" name="fieldattribute_3" class="i" value="<?=(isset($attributeList)&&isset($attributeList[2])?$attributeList[2]:'')?>" onkeydown="javascript:Reposition(this,event);"></input>
-				<img src="./images/tipo.jpg" alt="object attribute" width="75" height="18"/>
-				<select class="s" style="display:<?=(!isset($typeList[2])||$misc->TypeIsKnown($typeList[2]) ?"inline":"none")?>" onchange="ConvertDDLToTextfield('type_3')" name="type_3" id="type_2">
-                	<?
-                		$dataTypeIndex = 2;
-						eval("include \"./include/datatype.".$pdoDriver.".inc.php\";");
-					?>
-                </select>
-				<input style="display:<?=(!isset($typeList[2])||$misc->TypeIsKnown($typeList[2])?"none":"inline")?>" type="text" name="ttype_3" class="i" id="ttype_3" value="<?=(isset($typeList)&&isset($typeList[2])&&!$misc->TypeIsKnown($typeList[2])?$typeList[2]:'')?>"></input>
-				<img src="./images/render.jpg" alt="object attribute" width="80" height="18"/>
-				<select class="s" style="display:<?=(!isset($renderList[2])||$misc->RenderTypeIsKnown($renderList[2]) ?"inline":"none")?>" name="render_3" id="render_3">
-                	<?
-                		$dataRenderIndex = 2;
-						eval("include \"./include/rendertype.extjs.inc.php\";");
-					?>
-				</select>
-			</span><br/><br/>
-				
-			<?
-			if (isset($attributeList))
-			{
-				$max = count($attributeList);
-				for ($j=4; $j<= $max; $j++)
-				{			
-					echo '<div style="display:block" id="attribute_'.$j.'">
-						<br>
-						<span class="line">
-							<img src="./images/atributo.jpg" alt="object attribute" width="70" height="18"/>
-							<input type="text" name="fieldattribute_'.$j.'" class="i" id="fieldattribute_'.$j.'" value="'.(isset($attributeList)&&isset($attributeList[$j-1])?$attributeList[$j-1]:'').'" onkeydown="javascript:Reposition(this,event);"/>
-							<img src="./images/tipo.jpg" alt="object attribute" width="75" height="18"/>
-							<select class="s" style="display:'.(!isset($typeList[$j-1])||$misc->TypeIsKnown($typeList[$j-1])?"inline":"none").'" onchange="ConvertDDLToTextfield(\'type_'.$j.'\')" name="type_'.$j.'" id="type_'.$j.'">';
-
-							$dataTypeIndex = $j-1;
-							eval("include \"./include/datatype.".$pdoDriver.".inc.php\";");
-			
-							echo '</select>
-							<input style="display:'.(!isset($typeList[$j-1])||$misc->TypeIsKnown($typeList[$j-1]) ?"none":"inline").'" type="text" id="ttype_'.$j.'"  name="ttype_'.$j.'" class="i" value="'.(isset($typeList)&&isset($typeList[$j-1])&&!$misc->TypeIsKnown($typeList[$j-1])?$typeList[$j-1]:'').'"></input>
-							<img src="./images/render.jpg" alt="object attribute" width="80" height="18"/>
-							<select class="s" style="display:'.(!isset($renderList[$j-1])||$misc->RenderTypeIsKnown($renderList[$j-1])?"inline":"none").'" name="render_'.$j.'" id="render_'.$j.'">';
-
-							$dataRenderIndex = $j-1;
-							eval("include \"./include/rendertype.extjs.inc.php\";");
-			
-							echo '</select>
-						</span>						  
-						</div>';
-						 
-				}
-				
-				$max++;
-				
-				if ($max < 3)
-				{
-					$max = 3;
-				}
-				
-				for ($j=$max+1; $j<100; $j++)
-				{	
-					echo '<div style="display:none" id="attribute_'.$j.'">
-						<br>
-						<span class="line">
-							<img src="./images/atributo.jpg" alt="object attribute" width="70" height="18"/>
-							<input type="text" name="fieldattribute_'.$j.'" class="i" id="fieldattribute_'.$j.'" value="" onkeydown="javascript:Reposition(this,event);"/>
-							<img src="./images/tipo.jpg" alt="object attribute" width="75" height="18"/>
-							<select class="s" style="display:inline" onchange="ConvertDDLToTextfield(\'type_'.$j.'\')" name="type_'.$j.'" id="type_'.$j.'">';
-
-							$dataTypeIndex = $j;
-							eval("include \"./include/datatype.".$pdoDriver.".inc.php\";");
-			
-							echo '</select>
-							<input style="display:none" type="text" id="ttype_'.$j.'" name="ttype_'.$j.'" class="i"></input>
-							<img src="./images/render.jpg" alt="object attribute" width="80" height="18"/>
-							<select class="s" style="display:inline" name="render_'.$j.'" id="render_'.$j.'">';
-
-							$dataRenderIndex = $j;
-							eval("include \"./include/rendertype.extjs.inc.php\";");
-			
-							echo '</select>
-						</span>
-						</div>';
-
-				}
-			}
-			else
-			{
-				for ($j=4; $j<100; $j++)
-				{
-			
-					echo   '<div style="display:none" id="attribute_'.$j.'">
-						    <br>
-							<span class="line">
-								<img src="./images/atributo.jpg" alt="object attribute" width="70" height="18"/>
-								<input type="text" name="fieldattribute_'.$j.'" class="i" id="fieldattribute_'.$j.'" onkeydown="javascript:Reposition(this,event);"/>
-								<img src="./images/tipo.jpg" alt="object attribute" width="75" height="18"/>
-								<select class="s" style="display:inline" onchange="ConvertDDLToTextfield(\'type_'.$j.'\')" name="type_'.$j.'" id="type_'.$j.'">';
-								
-								$dataTypeIndex = $j;
-								eval("include \"./include/datatype.".$pdoDriver.".inc.php\";");
-				
-				
-								echo '</select>
-								<input style="display:none" type="text" id="ttype_'.$j.'" name="ttype_'.$j.'" class="i"></input>
-								<img src="./images/render.jpg" alt="object attribute" width="80" height="18"/>
-								<select class="s" style="display:inline" name="render_'.$j.'" id="render_'.$j.'">';
-
-								$dataRenderIndex = $j;
-								eval("include \"./include/rendertype.extjs.inc.php\";");
-				
-								echo '</select>
-							</span>
-							</div>';
-				}
-			}
-			?>
-		</div>
-		
-		
-
-		
-		<!--<div class="generate">
-			<a href="#" onclick="AddField();return false;"><img src="./images/addattribute.jpg" border="0" alt="add attribute"/></a> <a href="#" onclick="ResetFields();return false"><img src="./images/resetfields.jpg" border="0" alt="reset fields"/></a>		</div>-->
-
-		<div class="submit">
-			<a href="#" onclick="AddField();return false;"><img src="./images/addattribute.jpg" border="0" alt="add attribute"/></a> <a href="#" onclick="ResetFields();return false"><img src="./images/resetfields.jpg" border="0" alt="reset fields"/></a><br><br>
-			<input type="image"  src="./images/generate.jpg" alt="Generate!" onclick="WarnMinInput();"/>
-		</div><!-- submit -->
-		<br>
-		<div class="greybox">
-			TODO:
-			<ul align="right"><li>Make another type of form, like Master-Detail Form</li>
-			<li>Make it Compatible ExtJS 4.+</li>
-			<li>Work with another databases like Postgres</li>
-			<li>And more improvements...</li>
-			</ul>
-		</div>
-</form>
-</body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="../../assets/js/docs.min.js"></script>
+  </body>
 </html>
-<?php
-	unset($_SESSION);
-?>

@@ -53,7 +53,7 @@ class ObjectExtjs
 		$x = 0;		
 		foreach ($this->attributeList as $attribute)
 		{			
-			$this->string .= "\n\t\t\t\t".strtolower($attribute).":''";
+			$this->string .= "\n\t\t\t\t".$attribute.":''";
 			$x++;
 			if ($x != $this->totalAttributes)
 			{
@@ -95,58 +95,58 @@ class ObjectExtjs
 			if ($this->typeList[$x] == "VARCHAR(255)")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TEXT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "DATE")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'date',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."',";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'date',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."',";
 				$this->string .="\n\t\t\t\tdateFormat: 'Y-m-d'\t\t// Formato como viene desde la base de datos";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "INT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'int',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'int',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TINYINT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'bool',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'bool',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ( ($this->typeList[$x] == "FLOAT")  || ($this->typeList[$x] == "DOUBLE") )
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'float',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'float',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else			
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			$x++;
@@ -181,42 +181,42 @@ class ObjectExtjs
 			{
 				$this->string .="\n\t\t\t{";
 				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TEXT")
 			{
 				$this->string .="\n\t\t\t{";
 				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "DATE")
 			{
 				$this->string .="\n\t\t\t{";
 				$this->string .="\n\t\t\t\ttype: 'date',";							
-				$this->string .="\n\t\t\t\tdataIndex: '".strtolower($attribute)."',";
+				$this->string .="\n\t\t\t\tdataIndex: '".$attribute."',";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TINYINT")
 			{
 				$this->string .="\n\t\t\t{";
 				$this->string .="\n\t\t\t\ttype: 'boolean',";							
-				$this->string .="\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ( ($this->typeList[$x] == "FLOAT")  || ($this->typeList[$x] == "INT") || ($this->typeList[$x] == "DOUBLE") )
 			{
 				$this->string .="\n\t\t\t{";
 				$this->string .="\n\t\t\t\ttype: 'numeric',";							
-				$this->string .="\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else			
 			{
 				$this->string .="\n\t\t\t{";
 				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			$x++;
@@ -241,10 +241,10 @@ class ObjectExtjs
 		$this->string .="\n\t\t*/";	
 		$this->string .="\n\t\tvar proxy = new Ext.data.HttpProxy({";		
 		$this->string .="\n\t\t\tapi: {";
-		$this->string .="\n\t\t\t\tread   : \"controller.".strtolower($this->objectName).".php?accion=Listar\",";
-		$this->string .="\n\t\t\t\tcreate : \"controller.".strtolower($this->objectName).".php?accion=Nuevo\",";
-		$this->string .="\n\t\t\t\tupdate : \"controller.".strtolower($this->objectName).".php?accion=Guardar\",";
-		$this->string .="\n\t\t\t\tdestroy: \"controller.".strtolower($this->objectName).".php?accion=Eliminar\"";
+		$this->string .="\n\t\t\t\tread   : \"controllers/controller.".strtolower($this->objectName).".php?accion=Listar\",";
+		$this->string .="\n\t\t\t\tcreate : \"controllers/controller.".strtolower($this->objectName).".php?accion=Nuevo\",";
+		$this->string .="\n\t\t\t\tupdate : \"controllers/controller.".strtolower($this->objectName).".php?accion=Guardar\",";
+		$this->string .="\n\t\t\t\tdestroy: \"controllers/controller.".strtolower($this->objectName).".php?accion=Eliminar\"";
 		$this->string .="\n\t\t\t}";
 		$this->string .="\n\t\t});";
 	}
@@ -305,7 +305,7 @@ class ObjectExtjs
 		$this->string .= "\n* @version POG ".$GLOBALS['configuration']['versionNumber'].$GLOBALS['configuration']['revisionNumber']." / ".strtoupper($this->language);
 		$this->string .= "\n* @fecha  ".date('l jS \of F Y h:i:s A');
 		$this->string .= "\n* @copyright ".$GLOBALS['configuration']['copyright'];
-		$this->string .= "\n* @link http://localhost/pog_extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(var_export($this->renderList, true));
+		$this->string .= "\n* @link http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(var_export($this->renderList, true));
 		$this->string .= "\n*/\n";
 		$this->string .= "\nExt.SSL_SECURE_URL  = 'images/s.gif';";
 		$this->string .= "\nExt.BLANK_IMAGE_URL = 'images/s.gif';";
@@ -588,13 +588,35 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
 				$this->string .= "\n\t\t\t\twidth: 30,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."',";
 				$this->string .= "\n\t\t\t\t\teditor: {";
 				$this->string .= "\n\t\t\t\t\t\txtype: 'textfield',";
 				$this->string .= "\n\t\t\t\t\t\tallowBlank  :true,";
 				$this->string .= "\n\t\t\t\t\t}";
 				$this->string .= "\n\t\t\t}";
 			}		
+			else if ($this->typeList[$x] == "DATETIME")
+			{
+				$this->string .= "\n\t\t\t{";
+				$this->string .= "\n\t\t\t\txtype: 'datecolumn',";
+				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
+				$this->string .= "\n\t\t\t\twidth: 30,";
+				$this->string .= "\n\t\t\t\tsortable: true,";
+				$this->string .= "\n\t\t\t\t// Formato para Mostrar en el grid";
+	            $this->string .= "\n\t\t\t\tformat: 'd/m/Y',";
+	            $this->string .= "\n\t\t\t\trenderer: formatoFecha,";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."',";
+				$this->string .="\n\t\t\t\t\teditor: {";
+				$this->string .="\n\t\t\t\t\t\txtype: 'xdatefield',";
+				$this->string .="\n\t\t\t\t\t\tallowBlank  :true,";
+				$this->string .="\n\t\t\t\t\t\tformat: 'd/m/Y',";
+				$this->string .="\n\t\t\t\t\t\t//minValue: '01/01/2006',";
+				$this->string .="\n\t\t\t\t\t\t//minText: 'Can\'t have a start date before the company existed!',";
+				$this->string .="\n\t\t\t\t\t\t//maxValue: (new Date()).format('m/d/Y'),";
+				$this->string .="\n\t\t\t\t\t\tsubmitFormat:'Y-m-d'";
+				$this->string .="\n\t\t\t\t\t}";
+				$this->string .= "\n\t\t\t}";
+			}
 			else if ($this->typeList[$x] == "DATE")
 			{
 				$this->string .= "\n\t\t\t{";
@@ -605,7 +627,7 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\t// Formato para Mostrar en el grid";
 	            $this->string .= "\n\t\t\t\tformat: 'd/m/Y',";
 	            $this->string .= "\n\t\t\t\trenderer: formatoFecha,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."',";
 				$this->string .="\n\t\t\t\t\teditor: {";
 				$this->string .="\n\t\t\t\t\t\txtype: 'xdatefield',";
 				$this->string .="\n\t\t\t\t\t\tallowBlank  :true,";
@@ -626,8 +648,8 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\tsortable: true,";
 				$this->string .= "\n\t\t\t\talign: 'right',";
 				$this->string .= "\n\t\t\t\t// Formato para Mostrar en el grid";
-	            $this->string .= "\n\t\t\t\tformat: '$0,0.00',";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."',";
+	            $this->string .= "\n\t\t\t\t//format: '$0,0.00',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."',";
 				$this->string .="\n\t\t\t\t\teditor: {";
 				$this->string .="\n\t\t\t\t\t\txtype: 'numberfield',";
 				$this->string .="\n\t\t\t\t\t\tallowBlank  :true,";
@@ -646,7 +668,7 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\t// Formato para Mostrar en el grid";
 	            $this->string .= "\n\t\t\t\ttrueText: 'Yes',";
 	            $this->string .= "\n\t\t\t\tfalseText: 'No',";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."',";
 				$this->string .="\n\t\t\t\t\teditor: {";
 				$this->string .="\n\t\t\t\t\t\txtype: 'xcheckbox',";
 				$this->string .="\n\t\t\t\t\t}";
@@ -658,7 +680,7 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
 				$this->string .= "\n\t\t\t\twidth: 30,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."',";
 				$this->string .= "\n\t\t\t\t\teditor: {";
 				$this->string .= "\n\t\t\t\t\t\txtype: 'textfield',";
 				$this->string .= "\n\t\t\t\t\t\tallowBlank  :true,";

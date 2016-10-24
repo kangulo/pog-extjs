@@ -45,11 +45,6 @@ class ObjectController
 		$this->string .= "\n		Listar();";
 		$this->string .= "\n		break;";
 		$this->string .= "\n	}";
-		$this->string .= "\n	case 'GetNewID':";
-		$this->string .= "\n	{    ";
-		$this->string .= "\n		GetNewID();";
-		$this->string .= "\n		break;";
-		$this->string .= "\n	}";
 		$this->string .= "\n	case 'Get':";
 		$this->string .= "\n	{    ";
 		$this->string .= "\n		Get();";
@@ -194,7 +189,7 @@ class ObjectController
 			}
 			else if ($this->typeList[$x] != "HASMANY" && $this->typeList[$x] != "JOIN")
 			{
-				$this->sql .= "\n\t`".strtolower($attribute)."` ".stripcslashes($this->typeList[$x])." NOT NULL,";
+				$this->sql .= "\n\t`".$attribute."` ".stripcslashes($this->typeList[$x])." NOT NULL,";
 			}
 			$x++;
 		}
@@ -233,7 +228,7 @@ class ObjectController
 		$this->string .= "\n* @version POG ".$GLOBALS['configuration']['versionNumber'].$GLOBALS['configuration']['revisionNumber']." / ".strtoupper($this->language) ." MYSQL / ".strtoupper($this->extjsVersion)." Version";		;
 		$this->string .= "\n* @fecha  ".date('l jS \of F Y h:i:s A');
 		$this->string .= "\n* @copyright ".$GLOBALS['configuration']['copyright'];
-		$this->string .= "\n* @link http://localhost/pog_extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(var_export($this->renderList, true));
+		$this->string .= "\n* @link http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(var_export($this->renderList, true));
 		$this->string .= "\n*/\n";
 	}
 
@@ -265,24 +260,20 @@ class ObjectController
 		$this->string .= "function Guardar()\n{";
 		$this->string .= "\n\t\$info = \$_POST['data'];";
 		$this->string .= "\n\t\$data = json_decode(stripslashes(\$info));";
-		
-			
-		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
-					
+		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";
 		$x = 0;
 		foreach ($this->attributeList as $attribute)
 		{
 			if ( $x==0 ){
-				$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$_POST['co_" .rtrim($this->objectName,s). "'];";
+				$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$data->co_" .rtrim($this->objectName,s). ";";
 			}  
-			$this->string .="\n\t\$".$this->objectName."->".$attribute." \t= \$_POST['" . $attribute . "'];";
+			$this->string .="\n\t\$".$this->objectName."->".$attribute." \t= \$data->" . $attribute . ";";
 			$x++;
 		}
 		$this->string .="\n\tif ($".$this->objectName."->Save())";	
 		$this->string .="\n\t{";
 		$this->string .="\n\t\t\$result['message']    = 'Registro guardado Exitosamente!';";
 		$this->string .="\n\t\t\$result['success']    = true;";
-		$this->string .="\n\t\t\$result['co_".rtrim($this->objectName,s)."']    = $".$this->objectName."->co_".rtrim($this->objectName,s).";";
 		$this->string .="\n\t}";
 		$this->string .="\n\telse";
 		$this->string .="\n\t{";
@@ -327,7 +318,7 @@ class ObjectController
 			if ( $x==0 ){
 				$this->string .="\n\t\t\t\t\"co_".rtrim($this->objectName,s)."\" => \$co_".rtrim($this->objectName,s).",";
 			}
-			$this->string .="\n\t\t\t\t\"".$this->objectName."\" => \$".$this->objectName."->".$attribute."";
+			$this->string .="\n\t\t\t\t\"".$attribute."\" => \$".$this->objectName."->".$attribute."";
 			$x++;
 			if ($x != count($this->attributeList))
 			{
@@ -353,11 +344,10 @@ class ObjectController
 		$this->string .= "\n\t".$this->separator."\n";
 		$this->string .= $this->CreateComments("Crea la rutina para eliminar registros de la base de la Base de Datos",'',"void");
 		$this->string .= "function Eliminar()\n{";	
-		$this->string .= "\n\t\$co_".rtrim($this->objectName,s)." = \$_POST['co_".rtrim($this->objectName,s)."'];";
+		$this->string .= "\n\t\$co_".rtrim($this->objectName,s)." = json_decode(stripslashes(\$_POST['data']));";
 			
 		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
 		$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$co_".rtrim($this->objectName,s).";";
-		
 		
 		$this->string .="\n\tif ($".$this->objectName."->Delete())";	
 		$this->string .="\n\t{";
@@ -382,7 +372,6 @@ class ObjectController
 		$this->string .= $this->CreateComments("Crea una serie de condiciones para aplicar los filtros",array("multidimensional array {(\"field\", \"comparator\", \"value\"), (\"field\", \"comparator\", \"value\"), ...}","bool \$deep"));
 		$this->string .= "\nfunction Listar()";
 		$this->string .= "\n{";
-		$this->string .= "\n\t\$search = isset(\$_GET['search']) ? \$_GET['search'] : '';";
 		$this->string .= "\n";		
 		$this->string .= "\n\t// Esto obtiene el array de filtros";
 		$this->string .= "\n\t\$filters = isset(\$_REQUEST['filter']) ? \$_REQUEST['filter'] : null;";
@@ -394,7 +383,7 @@ class ObjectController
 		$this->string .= "\n\t\t\$encoded = false;";
 		$this->string .= "\n\t} else {";
 		$this->string .= "\n\t\t\$encoded = true;";
-		$this->string .= "\n\t\t//\$filters = json_decode(\$filters);";
+		$this->string .= "\n\t\t\$filters = json_decode(\$filters);";
 		$this->string .= "\n\t}";
 		$this->string .= "\n";
 		$this->string .= "\n\t// initialize variables";
@@ -406,10 +395,6 @@ class ObjectController
 		$this->string .= "\n\t\$params = array();";
 		$this->string .= "\n\t\$params[] = array('co_".rtrim($this->objectName,s)."', '>', 0);";
 		$this->string .= "\n";
-		$this->string .= "\n\tif (!empty(\$search))";
-		$this->string .= "\n\t{";
-		$this->string .= "\n\t\t\$params[] = array('" . $this->attributeList[0] . "', 'like', \"%\$search%\");";
-		$this->string .= "\n\t}";
 		$this->string .= "\n";
 		$this->string .= "\n\t// loop through filters sent by client";
 		$this->string .= "\n\tif (is_array(\$filters)) {";
@@ -498,13 +483,6 @@ class ObjectController
 		$this->string .= "\n\t\t\t}";
 		$this->string .= "\n\t\t\t\$where .= \$qs;		";
 		$this->string .= "\n\t\t}";
-		$this->string .= "\n\t\telse";
-		$this->string .= "\n\t\t{";
-		$this->string .= "\n\t\t\tif (!empty(\$filters))";
-		$this->string .= "\n\t\t\t{";
-		$this->string .= "\n\t\t\t\t\$params[] = json_decode(\$filters);";
-		$this->string .= "\n\t\t\t}";
-		$this->string .= "\n\t\t}";
 		$this->string .= "\n";
 		$this->string .= "\n\t\t\$".$this->objectName." = new ".$this->objectName."();	";
 		$this->string .= "\n\t\t//print_r(\$params);	";
@@ -516,14 +494,10 @@ class ObjectController
 	// -------------------------------------------------------------
 	function CreateGetFunction()
 	{
-		$this->string .= "\n\t".$this->separator."\n";
+		$this->string .= "\n\t".$this->separator."\n\t";
 		$this->string .= $this->CreateComments("Gets object from database",array("integer \$co_".rtrim(strtolower($this->objectName),s).""),"object \$".$this->objectName);
-		$this->string .= "function Get()\n{";
-		$this->string .= "\n\t\$co_".rtrim($this->objectName,s)." \t= \$_POST['co_".rtrim($this->objectName,s)."'];";
-		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
-		$this->string .="\n\t\$".$this->objectName."->co_".rtrim($this->objectName,s)." \t= \$co_".rtrim($this->objectName,s).";";
-		$this->string .="\n\tprint $".$this->objectName."->Get();";
-		/*
+		$this->string .="\tfunction Get(\$co_".rtrim(strtolower($this->objectName),s).")\n\t{";
+		$this->string .= "\n\t\t\$connection = Database::Connect();";
 		$this->string .= "\n\t\t\$this->pog_query = \"select * from `".strtolower($this->objectName)."` where `co_".rtrim(strtolower($this->objectName),s)."`='\".intval(\$co_".rtrim(strtolower($this->objectName),s).").\"' LIMIT 1\";";
 		$this->string .= "\n\t\t\$cursor = Database::Reader(\$this->pog_query, \$connection);";
 		$this->string .= "\n\t\twhile (\$row = Database::Read(\$cursor))";
@@ -553,19 +527,8 @@ class ObjectController
 			$x++;
 		}
 		$this->string .= "\n\t\t}";
-		$this->string .= "\n\t\treturn \$this;";*/
-		$this->string .= "\n}";
-	}
-	
-	// -------------------------------------------------------------
-	function CreateGetNewIDFunction()
-	{
-		$this->string .= "\n\t".$this->separator."\n";
-		$this->string .= $this->CreateComments("Gets object from database",array("integer \$co_".rtrim(strtolower($this->objectName),s).""),"object \$".$this->objectName);
-		$this->string .= "function GetNewID()\n{";
-		$this->string .="\n\t$".$this->objectName." = new ".$this->objectName."();";	
-		$this->string .="\n\tprint $".$this->objectName."->GetNewID();";
-		$this->string .= "\n}";
+		$this->string .= "\n\t\treturn \$this;";
+		$this->string .= "\n\t}";
 	}
 
 	// -------------------------------------------------------------

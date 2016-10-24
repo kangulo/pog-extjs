@@ -1,4 +1,4 @@
-<?
+<?php
 global $configuration;
 $configuration['soapEngine'] = "nusoap"; //other value is "phpsoap"
 $configuration['soap'] = "http://www.phpobjectgenerator.com/services/soap.php?wsdl";

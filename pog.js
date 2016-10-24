@@ -1,8 +1,9 @@
 function AddField() {
-    trs = document.getElementsByTagName("div")
+    trs = document.getElementsByTagName("tr")
     for (var w = 0; w < trs.length; w++) {
-        if (trs[w].style.display == "none") {
-            trs[w].style.display = "block"
+		console.log(trs[w].className);
+        if (trs[w].className == "hide_me") {
+            trs[w].className = "";
             var control = document.getElementById("field" + trs[w].id)
             try {
                 control.focus()
@@ -195,11 +196,13 @@ function WarnMinInput() {
         if (trs[w].value != "" && trs[w].type != "hidden" && trs[w].name != "object") {
             inputCount++;
             if (allVals, trs[w].value != '' && InArray(allVals, trs[w].value)) {
-                alert("Warning:\nYou have more than 1 attribute with the same value. Attributes must be unique.");
-                return;
+                //alert("Warnisng:\nYou have more than 1 attribute with the same value. Attributes must be unique.");
+				$('#alert1').modal('show');
+                return false;
             } else if (trs[w].value == document.getElementById('objName').value) {
-                alert("An object cannot relate to itself recursively. Make sure attribute names are different from the object name.");
-                return;
+                //alert("An object cannot relate to itself recursively. Make sure attribute names are different from the object name.");
+                $('#alert2').modal('show');
+                return false;
             } else {
                 allVals.push(trs[w].value);
                 allCount++;
@@ -215,12 +218,14 @@ function WarnMinInput() {
             }
         }
         if (typeCount >= inputCount) {
-            alert("Warning:\nYou need to have at least 1 non-parent/child attribute. Else POG will generate an invalid PHP object");
+            alert("Warvning:\nYou need to have at least 1 non-parent/child attribute. Else POG will generate an invalid PHP object");
         }
     } else {
-        alert("Warning:\nWithout any object attributes, POG may generate an invalid PHP object. You need to have at least 1 non-parent/child attribute");
+		$('#alert3').modal('show');
+        //alert("Warnixng:\nWithout any object attributes, POG may generate an invalid PHP object. You need to have at least 1 non-parent/child attribute");
+        return false;
     }
-    return false;
+    return true;
 }
 
 function InArray(array, val) {

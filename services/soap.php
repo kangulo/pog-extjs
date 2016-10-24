@@ -70,7 +70,7 @@ $server -> register('GenerateObjectExtjs',
 						'language' => 'xsd:string',
 						'wrapper' => 'xsd:string',
 						'pdoDriver' => 'xsd:string',
-						'extjsVersion' => 'xsd:string'),						
+						'extjsVersion' => 'xsd:string'),
 					array('return' => 'xsd:string'),
 					'urn:pogwsdl',
 					'urn:pogwsdl#GenerateObject',
@@ -78,6 +78,7 @@ $server -> register('GenerateObjectExtjs',
 					'encoded',
 					'Generates the appropriate object from supplied attributeList, typeList etc.'
 					);
+
 $server -> register('GenerateMapping',
 					array('objectName1' => 'xsd:string',
 						'objectName2' => 'xsd:string',
@@ -336,52 +337,49 @@ function GenerateObjectController($objectName, $attributeList, $typeList,$render
 	{
 		$extjsVersion = '';
 	}
-
-	require_once "../extjs_factory/controller.object.php";
-	
-	$object = new ObjectController($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);
-	$object->BeginObject();	
-	$object->BuildActions();	
-	$object->CreateGetNewIDFunction();
-	$object->CreateGetFunction();
-	$object->CreateSaveFunction();	
-	$object->CreateSaveNewFunction();	
-	$object->CreateListFunction();	
-	$object->CreateDeleteFunction();	
-	
-	/*
-	 * $object->CreateMagicGetterFunction();
-	$object->CreateConstructor();
-	$object->CreateGetFunction();
-	$object->CreateGetListFunction();
-	$object->CreateSaveFunction((in_array("HASMANY", $typeList) || in_array("JOIN", $typeList)));
-	$object->CreateSaveNewFunction((in_array("HASMANY", $typeList) || in_array("JOIN", $typeList)));
-	$object->CreateDeleteFunction((in_array("HASMANY", $typeList) || in_array("JOIN", $typeList)));
-	$object->CreateDeleteListFunction((in_array("HASMANY", $typeList) || in_array("JOIN", $typeList)));
-
-	$i = 0;
-	foreach ($typeList as $type)
+	//require_once "../extjs_factory/controller.object.php";
+	if ($extjsVersion  == 30)
 	{
-		if ($type == "HASMANY")
-		{
-			$object->CreateGetChildrenFunction($attributeList[$i]);
-			$object->CreateSetChildrenFunction($attributeList[$i]);
-			$object->CreateAddChildFunction($attributeList[$i]);
-		}
-		else if ($type == "BELONGSTO")
-		{
-			$object->CreateGetParentFunction($attributeList[$i]);
-			$object->CreateSetParentFunction($attributeList[$i]);
-		}
-		else if ($type == "JOIN")
-		{
-			$object->CreateSetAssociationsFunction($attributeList[$i]);
-			$object->CreateGetAssociationsFunction($attributeList[$i]);
-			$object->CreateAddAssociationFunction($attributeList[$i]);
-		}
-		$i++;
+		require_once "../extjs_factory/controller.object.php";
+		$object = new ObjectController($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);
+		$object->BeginObject();
+		$object->BuildActions();
+		$object->CreateSaveFunction();
+		$object->CreateSaveNewFunction();
+		$object->CreateListFunction();
+		$object->CreateDeleteFunction();
+	}elseif ($extjsVersion  == 31) {
+		require_once "../extjs_factory/controller.object.php";
+		$object = new ObjectController($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);
+		$object->BeginObject();
+		$object->BuildActions();
+		$object->CreateSaveFunction();
+		$object->CreateSaveNewFunction();
+		$object->CreateListFunction();
+		$object->CreateDeleteFunction();
+	}elseif ($extjsVersion  == 42) {
+		require_once "../extjs_factory/controller.object.42.php";
+		$object = new ObjectController($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);
+		$object->BeginObject();
+		$object->BuildActions();
+		$object->CreateGetNewIDFunction();
+		$object->CreateGetFunction();
+		$object->CreateSaveFunction();
+		$object->CreateSaveNewFunction();
+		$object->CreateListFunction();
+		$object->CreateDeleteFunction();
+	}else{
+		require_once "../jquery_factory/controller.object.3.1.php";
+		$object = new ObjectController($objectName,$attributeList,$typeList,$renderList, $language,$wrapper,$pdoDriver,$extjsVersion);
+		$object->BeginObject();
+		$object->BuildActions();
+		$object->CreateGetNewIDFunction();
+		$object->CreateGetFunction();
+		$object->CreateSaveFunction();
+		$object->CreateSaveNewFunction();
+		$object->CreateListFunction();
+		$object->CreateDeleteFunction();
 	}
-*/
 	$object->EndObject();
 	return base64_encode($object->string);//$object->BeginObject();//base64_encode($object->string);
 }
@@ -438,7 +436,7 @@ function GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList
 		$pdoDriver = '';
 	}
 	if ($extjsVersion  == 30)
-	{			
+	{
 		require_once "../extjs_factory/class.objectextjs3.0.php";	
 		$object = new ObjectExtjs($objectName,$attributeList,$typeList,$renderList,$pdoDriver, $language,$extjsVersion);
 		$object->BeginObject();
@@ -453,7 +451,7 @@ function GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList
 		$object->CreateGuardarFunction();
 		$object->CreateEliminarFunction();
 		//$object->EndObject();
-	}elseif ($extjsVersion  == 30) {
+	}elseif ($extjsVersion  == 31) {
 		require_once "../extjs_factory/class.objectextjs3.1.php";	
 		$object = new ObjectExtjs($objectName,$attributeList,$typeList,$renderList,$pdoDriver, $language,$extjsVersion);
 		$object->BeginObject();
@@ -462,9 +460,13 @@ function GenerateObjectExtjs($objectName, $attributeList, $typeList, $renderList
 		//$object->CreateLayout();
 		//$object->Create();
 		//$object->EndObject();
-	}else{
+	}elseif ($extjsVersion  == 42) {
 		require_once "../extjs_factory/class.objectextjs4.2.php";	
 		$object = new ObjectExtjs($objectName,$attributeList,$typeList,$renderList,$pdoDriver, $language,$extjsVersion);
+		$object->BeginObject();
+	}else{
+		require_once "../jquery_factory/class.jquery3.1.php";	
+		$object = new ObjectJQueryBootstrap3($objectName,$attributeList,$typeList,$renderList,$pdoDriver, $language,$extjsVersion);
 		$object->BeginObject();
 	}
 	
@@ -1010,6 +1012,10 @@ function GeneratePackage($objectName, $attributeList, $typeList,$renderList, $la
 	$package["images/icons/save.png"] = base64_encode($data);
 	$data = file_get_contents("../extjs_factory/icons/cancel.png");
 	$package["images/icons/cancel.png"] = base64_encode($data);
+	$data = file_get_contents("../extjs_factory/icons/reload.png");
+	$package["images/icons/reload.png"] = base64_encode($data);
+	$data = file_get_contents("../extjs_factory/icons/search.png");
+	$package["images/icons/search.png"] = base64_encode($data);
 		
 	// Pure Extjs JavaScript 
 	$package["js/xdatefield/xcheckbox.js"] =  base64_encode(file_get_contents("../extjs_factory/js/xdatefield/xcheckbox.js"));

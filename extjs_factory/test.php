@@ -24,4 +24,4 @@
 	$object->Debug();
 	$a = $object->string;
 ?>
-<textarea cols="200" rows="30"><?echo $a;?></textarea>
+<textarea cols="200" rows="30"><?php echo $a;?></textarea>

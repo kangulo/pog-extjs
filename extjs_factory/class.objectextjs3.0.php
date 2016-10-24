@@ -38,7 +38,7 @@ class ObjectExtjs
 		$this->string .="\n\t// Habilita los Tooltiptext";
 		$this->string .="\n\tExt.QuickTips.init();\n";	
 		$this->string .="\n\t// Activar la validacion de errores al lado del control";
-		$this->string .="\n\tExt.form.Field.prototype.msgTarget = 'side';\n";			
+		$this->string .="\n\tExt.form.Field.prototype.msgTarget = 'side';\n";
 		$this->string .= "\n\t/**";
 		$this->string .= "\n\t* Definimos los campos que podra contener el panel which this Panel contains.";
 		$this->string .= "\n\t* @return {Ext.form.BasicForm} The {@link Ext.form.BasicForm Form} which this Panel contains.";
@@ -47,7 +47,7 @@ class ObjectExtjs
 		$this->string .="\n\tvar co_".rtrim(strtolower($this->objectName),s)." = new Ext.form.TextField({ ";
 		$this->string .="\n\t\tid        :'co_".rtrim(strtolower($this->objectName),s)."',";
 		$this->string .="\n\t\tname      :'co_".rtrim(strtolower($this->objectName),s)."',";
-		$this->string .="\n\t\tfieldLabel:'co_".rtrim(strtolower($this->objectName),s)."',";
+		$this->string .="\n\t\t//fieldLabel:'co_".rtrim(strtolower($this->objectName),s)."',";
 		$this->string .="\n\t\tdisabled  :true,";
 		$this->string .="\n\t\thidden  :true,";
 		$this->string .="\n\t\t//hideLabel  :true,";
@@ -59,11 +59,11 @@ class ObjectExtjs
 		$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 		$this->string .="\n\t\t\tDeshabilitar(store);";
 		$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-		$this->string .="\n\t\t}\n\t";	
-		$this->string .="\n\t});\n\t";	
+		$this->string .="\n\t\t}\n\t";
+		$this->string .="\n\t});\n\t";
 		$this->string .="\n\tco_".rtrim(strtolower($this->objectName),s).".on('focus', function() { ";
 		$this->string .="\n\t\tthis.selectText();";
-		$this->string .="\n\t});\n\t";					
+		$this->string .="\n\t});\n\t";
 		$this->arrayControls[] = "co_".rtrim(strtolower($this->objectName),s);
 		
 		$x = 0;
@@ -72,28 +72,28 @@ class ObjectExtjs
 			//$this->string .= $this->renderList[$x];
 			if ($this->renderList[$x] == "Ext.form.TextField")
 			{
-				$this->string .="\n\t// creamos el TextField ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.TextField({ ";
-				$this->string .="\n\t\tid        :'".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      :'".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el TextField ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.TextField({ ";
+				$this->string .="\n\t\tid        :'".$attribute."',";
+				$this->string .="\n\t\tname      :'".$attribute."',";
+				$this->string .="\n\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\tallowBlank  :true,";
 				$this->string .="\n\t\tdisabled  :true,";
 				$this->string .="\n\t\ttabIndex  :".($x+1)."";
-				$this->string .="\n\t});\n\t";	
+				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 			else if ($this->renderList[$x] == "Ext.form.ComboBox")
 			{
@@ -104,12 +104,12 @@ class ObjectExtjs
 				$this->string .="\n\t/**";
 				$this->string .="\n\t*  JsonStore que provee los valores para llenara un Combo";
 				$this->string .="\n\t*  y se carga Automaticamente =>  autoLoad=true";
-				$this->string .="\n\t*/\n\t";				
+				$this->string .="\n\t*/\n\t";
 				$this->string .="\n\t// Descomenta el siguiente Bloque de codigo si tu combo";
 				$this->string .="\n\t// Usa un JsonStore y se carga desde la base de datos";
 				$this->string .="\n\t/*";
 				$this->string .="\n\tvar ds".ucfirst($attribute)." = new Ext.data.JsonStore({";
-				$this->string .="\n\t\turl     : 'controller.".$this->objectName.".php?accion=get".ucfirst($attribute)."',";
+				$this->string .="\n\t\turl     : 'controllers/controller.".$this->objectName.".php?accion=get".ucfirst($attribute)."',";
 				$this->string .="\n\t\troot    : '".ucfirst($attribute)."',";
 				$this->string .="\n\t\tautoLoad: true,";
 				$this->string .="\n\t\tfields  : [{";
@@ -123,49 +123,49 @@ class ObjectExtjs
 				$this->string .="\n\t});";
 				$this->string .="\n\t*/\n\t";
 				
-				$this->string .="\n\t// creamos el ComboBox ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.ComboBox({";
-				$this->string .="\n\t\tid            : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname          : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel    : '".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el ComboBox ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.ComboBox({";
+				$this->string .="\n\t\tid            : '".$attribute."',";
+				$this->string .="\n\t\tname          : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel    : '".$attribute."',";
 				$this->string .="\n\t\thiddenName    : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tvalueField    : '".strtolower($attribute)."',";
+				$this->string .="\n\t\tvalueField    : 'co_".strtolower($attribute)."',";
 				$this->string .="\n\t\tdisplayField  : 'nb_".strtolower($attribute)."',";
 				$this->string .="\n\t\ttabIndex      :".($x+1).",";
 				$this->string .="\n\t\tstore         : new Ext.data.SimpleStore({\t//ds".ucfirst($attribute).",";
-				$this->string .="\n\t\t\tfields: ['".strtolower($attribute)."', 'nb_".strtolower($attribute)."'],";
+				$this->string .="\n\t\t\tfields: ['co_".strtolower($attribute)."', 'nb_".strtolower($attribute)."'],";
 				$this->string .="\n\t\t\tdata  : [";
-				$this->string .="\n\t\t\t\t['".strtolower($attribute)."1', 'nb_".strtolower($attribute)."1'],";
-				$this->string .="\n\t\t\t\t['".strtolower($attribute)."2', 'nb_".strtolower($attribute)."2']";				
+				$this->string .="\n\t\t\t\t['co_".strtolower($attribute)."1', 'nb_".strtolower($attribute)."1'],";
+				$this->string .="\n\t\t\t\t['co_".strtolower($attribute)."2', 'nb_".strtolower($attribute)."2']";				
 				$this->string .="\n\t\t]}),";
 				$this->string .="\n\t\ttypeAhead     : true,";
 				$this->string .="\n\t\tforceSelection: true,";
 				$this->string .="\n\t\tmode          : 'local',";
 				$this->string .="\n\t\ttriggerAction : 'all',";
-				$this->string .="\n\t\temptyText     : 'Seleccione un ".strtolower($attribute)."...',";
+				$this->string .="\n\t\temptyText     : 'Seleccione un ".$attribute."...',";
 				$this->string .="\n\t\twidth         : 160";
 				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 					
 			}
 			else if ($this->renderList[$x] == "Ext.form.DateField")
 			{
-				$this->string .="\n\t// creamos el DateField ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.ux.form.XDateField({";
-				$this->string .="\n\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel: '".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el DateField ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.ux.form.XDateField({";
+				$this->string .="\n\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel: '".$attribute."',";
 				$this->string .="\n\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\tallowBlank  :true,";
 				$this->string .="\n\t\tdisabled  :true,";
@@ -174,25 +174,25 @@ class ObjectExtjs
 				$this->string .="\n\t\tsubmitFormat:'Y-m-d'";
 				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = "".strtolower($attribute)."";  
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = "".$attribute."";  
 			}
 			else if ($this->renderList[$x] == "Ext.form.TextArea")
 			{
-				$this->string .="\n\t// creamos el TextArea ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.TextArea({ ";
-				$this->string .="\n\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el TextArea ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.TextArea({ ";
+				$this->string .="\n\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\tallowBlank  :true,";
 				$this->string .="\n\t\tdisabled  :true,";
@@ -202,114 +202,114 @@ class ObjectExtjs
 				$this->string .="\n\t\theight    : 100";
 				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 			else if ($this->renderList[$x] == "Ext.form.Checkbox")
 			{
-				$this->string .="\n\t// creamos el XCheckbox ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.ux.form.XCheckbox({ ";
-				$this->string .="\n\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el XCheckbox ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.ux.form.XCheckbox({ ";
+				$this->string .="\n\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\ttabIndex  :".($x+1).",";
 				$this->string .="\n\t\tsubmitOffValue: 0,";
 				$this->string .="\n\t\tsubmitOnValue:1";
-				$this->string .="\n\t});\n\t";				
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 /*
 			else if ($this->renderList[$x] == "Ext.form.Checkbox")
 			{
-				$this->string .="\n\t// creamos el Checkbox ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.Checkbox({ ";
-				$this->string .="\n\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el Checkbox ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.Checkbox({ ";
+				$this->string .="\n\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\ttabIndex  :".($x+1)."";
-				$this->string .="\n\t});\n\t";				
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 */
 			else if ($this->renderList[$x] == "Ext.form.HtmlEditor")
 			{
-				$this->string .="\n\t// creamos el TextArea ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.HtmlEditor({ ";
-				$this->string .="\n\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el TextArea ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.HtmlEditor({ ";
+				$this->string .="\n\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\ttabIndex  :".($x+1).",";
 				$this->string .="\n\t\thideLabel : true,";
 				$this->string .="\n\t\tanchor    : '98%',";
 				$this->string .="\n\t\theight    : 200";
 				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 			else if ($this->renderList[$x] == "Ext.form.TimeField")
 			{
-				$this->string .="\n\t// creamos el TextField ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.TimeField({ ";
-				$this->string .="\n\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel: '".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el TextField ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.TimeField({ ";
+				$this->string .="\n\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\tfieldLabel: '".$attribute."',";
 				$this->string .="\n\t\ttabIndex  :".($x+1).",";
 				$this->string .="\n\t\tminValue  : '8:00am',";
 				$this->string .="\n\t\tmaxValue  : '6:00pm'";
 				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 			else
 			{
-				$this->string .="\n\t// creamos el TextField ".strtolower($attribute)."";
-				$this->string .="\n\tvar ".strtolower($attribute)." = new Ext.form.TextField({ ";
-				$this->string .="\n\t\tid        :'".strtolower($attribute)."',";
-				$this->string .="\n\t\tname      :'".strtolower($attribute)."',";
-				$this->string .="\n\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t// creamos el TextField ".$attribute."";
+				$this->string .="\n\tvar ".$attribute." = new Ext.form.TextField({ ";
+				$this->string .="\n\t\tid        :'".$attribute."',";
+				$this->string .="\n\t\tname      :'".$attribute."',";
+				$this->string .="\n\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\ttabIndex  :".($x+1)."";
 				$this->string .="\n\t});\n\t";
 				$this->string .="\n\t// creamos el listener para el KeyUp evento";
-				$this->string .="\n\t".strtolower($attribute).".on('keyup', function(el,e) { ";
+				$this->string .="\n\t".$attribute.".on('keyup', function(el,e) { ";
 				$this->string .="\n\t\tif (e.getKey() == Ext.EventObject.ESC) {";
 				$this->string .="\n\t\t\tExt.getCmp('form').getForm().reset();";
 				$this->string .="\n\t\t\tDeshabilitar(store);";
 				$this->string .="\n\t\t\tExt.getCmp('grid').focus();";
-				$this->string .="\n\t\t}\n\t";	
-				$this->string .="\n\t});\n\t";	
-				$this->string .="\n\t".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\t}\n\t";
+				$this->string .="\n\t});\n\t";
+				$this->string .="\n\t".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\tthis.selectText();";
-				$this->string .="\n\t});\n\t";	
-				$this->arrayControls[] = strtolower($attribute);
+				$this->string .="\n\t});\n\t";
+				$this->arrayControls[] = $attribute;
 			}
 			$x++;
 		}
@@ -352,7 +352,7 @@ class ObjectExtjs
 		{
 			if ($this->typeList[$x] == "HASMANY" || $this->typeList[$x] == "JOIN")
 			{
-				$this->string .="\n\t\t\$this->_".strtolower($attribute)."List = array();";
+				$this->string .="\n\t\t\$this->_".$attribute."List = array();";
 			}
 			else if ($this->typeList[$x] != "BELONGSTO")
 			{
@@ -378,7 +378,7 @@ class ObjectExtjs
 			}
 			else if ($this->typeList[$x] != "HASMANY" && $this->typeList[$x] != "JOIN")
 			{
-				$this->sql .= "\n\t`".strtolower($attribute)."` ".stripcslashes($this->typeList[$x])." NOT NULL,";
+				$this->sql .= "\n\t`".$attribute."` ".stripcslashes($this->typeList[$x])." NOT NULL,";
 			}
 			$x++;
 		}
@@ -417,7 +417,7 @@ class ObjectExtjs
 		$this->string .= "\n* <b>".$this->objectName."</b> Clase ExtJs integrada con Metodos CRUD.";
 		$this->string .= "\n* @author ".$GLOBALS['configuration']['author'];
 		$this->string .= "\n* @fecha  ".date('l jS \of F Y h:i:s A');
-		$this->string .= "\n* @link http://localhost/pog_extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(urlencode(var_export($this->renderList, true)));
+		$this->string .= "\n* @link http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(urlencode(var_export($this->renderList, true)));
 		$this->string .= "\n*/\n";
 		$this->string .= "\nExt.SSL_SECURE_URL  = 'images/s.gif';";
 		$this->string .= "\nExt.BLANK_IMAGE_URL = 'images/s.gif';";
@@ -457,7 +457,7 @@ class ObjectExtjs
 		$this->string .="\n\t\t\tfields:[";	
 		$this->string .="\n\t\t\t{";
 		$this->string .="\n\t\t\t\tname: 'co_".rtrim(strtolower($this->objectName),s)."',";
-		$this->string .="\n\t\t\t\ttype: 'int',";							
+		$this->string .="\n\t\t\t\ttype: 'int',";
 		$this->string .="\n\t\t\t\tmapping: 'co_".rtrim(strtolower($this->objectName),s)."'";
 		$this->string .="\n\t\t\t},";
 		$x = 0;		
@@ -466,58 +466,58 @@ class ObjectExtjs
 			if ($this->typeList[$x] == "VARCHAR(255)")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TEXT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "DATE")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'date',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."',";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'date',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."',";
 				$this->string .="\n\t\t\t\tdateFormat: 'Y-m-d'\t\t// Formato como viene desde la base de datos";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "INT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'int',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'int',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TINYINT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'bool',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'bool',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "FLOAT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'float',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'float',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			else			
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
-				$this->string .="\n\t\t\t\tmapping: '".strtolower($attribute)."'";
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
+				$this->string .="\n\t\t\t\tmapping: '".$attribute."'";
 				$this->string .="\n\t\t\t}";
 			}
 			$x++;
@@ -539,12 +539,12 @@ class ObjectExtjs
 		$this->string .="\n\t\t*  pero con especificamos los metodos CRUD \"read\", \"create\", \"update\" y \"destroy\"";
 		$this->string .="\n\t\t*  con su accion respectiva";
 		$this->string .="\n\t\t*/";	
-		$this->string .="\n\t\tvar proxy = new Ext.data.HttpProxy({";		
+		$this->string .="\n\t\tvar proxy = new Ext.data.HttpProxy({";
 		$this->string .="\n\t\t\tapi: {";
-		$this->string .="\n\t\t\t\tread   : \"controller.".strtolower($this->objectName).".php?accion=Listar\",";
-		$this->string .="\n\t\t\t\tcreate : \"controller.".strtolower($this->objectName).".php?accion=Nuevo\",";
-		$this->string .="\n\t\t\t\tupdate : \"controller.".strtolower($this->objectName).".php?accion=Guardar\",";
-		$this->string .="\n\t\t\t\tdestroy: \"controller.".strtolower($this->objectName).".php?accion=Eliminar\"";
+		$this->string .="\n\t\t\t\tread   : \"controllers/controller.".strtolower($this->objectName).".php?accion=Listar\",";
+		$this->string .="\n\t\t\t\tcreate : \"controllers/controller.".strtolower($this->objectName).".php?accion=Nuevo\",";
+		$this->string .="\n\t\t\t\tupdate : \"controllers/controller.".strtolower($this->objectName).".php?accion=Guardar\",";
+		$this->string .="\n\t\t\t\tdestroy: \"controllers/controller.".strtolower($this->objectName).".php?accion=Eliminar\"";
 		$this->string .="\n\t\t\t}";
 		$this->string .="\n\t\t});";
 		$this->string .= "\n\t".$this->separator."\n\t";
@@ -579,14 +579,14 @@ class ObjectExtjs
         $this->string .="\n\t\tproxy: proxy,";
         $this->string .="\n\t\treader: reader,";
         $this->string .="\n\t\twriter: writer";
-		$this->string .="\n\t});\n\t";				
-		$this->string .="\n\t// Se dispara si ocurre una excepcion en la carga del store.";		
+		$this->string .="\n\t});\n\t";
+		$this->string .="\n\t// Se dispara si ocurre una excepcion en la carga del store.";
 		$this->string .="\n\t// maneja cualquier excepcion que pueda ocurrir en el Proxy durante la carda de los datos.";
 		$this->string .="\n\tstore.on('loadexception', loadFailed);";
-		$this->string .= "\n\t".$this->separator."\n\t";		
+		$this->string .= "\n\t".$this->separator."\n\t";
 		$this->string .="\n\t// Funcion que de dispara luego que los datos han sido cargados exitosamente.";
 		$this->string .="\n\tstore.on('load', loadSuccessful);";
-		$this->string .= "\n\t".$this->separator."\n\t";				
+		$this->string .= "\n\t".$this->separator."\n\t";
 		$this->string .="\n\t// Usa un callback metodo para crear y cargar el grid.";
 		$this->string .="\n\tstore.load({";
 		$this->string .="\n\t\tparams: {";
@@ -641,7 +641,7 @@ class ObjectExtjs
 		$this->string .="\n\t\t\t\tform.btnEliminar.enable();";
 		$this->string .="\n\t\t\t}";
 		$this->string .="\n\t\t}";
-		$this->string .="\n\t}";		
+		$this->string .="\n\t}";
 	}
 
 	function CreateWriterFunction()
@@ -675,53 +675,53 @@ class ObjectExtjs
 		$this->string .= "\n\t\tencode: false, // json encode the filter query";
 		$this->string .= "\n\t\tlocal: false,  // defaults to false (remote filtering)";
 		$this->string .= "\n\t\tfilters: [";
-		$this->string .= "\n\t\t\t{";		
-		$this->string .= "\n\t\t\t\ttype: 'numeric',";							
+		$this->string .= "\n\t\t\t{";
+		$this->string .= "\n\t\t\t\ttype: 'numeric',";
 		$this->string .= "\n\t\t\t\tdataIndex: 'co_".rtrim(strtolower($this->objectName),s)."'";
-		$this->string .= "\n\t\t\t},";	
+		$this->string .= "\n\t\t\t},";
 		$x = 0;		
 		foreach ($this->attributeList as $attribute)
 		{			
 			if ($this->typeList[$x] == "VARCHAR(255)")
 			{
-				$this->string .= "\n\t\t\t{";		
-				$this->string .= "\n\t\t\t\ttype: 'string',";							
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t{";
+				$this->string .= "\n\t\t\t\ttype: 'string',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TEXT")
 			{
-				$this->string .= "\n\t\t{";		
-				$this->string .= "\n\t\t\ttype: 'string',";							
-				$this->string .= "\n\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t{";
+				$this->string .= "\n\t\t\ttype: 'string',";
+				$this->string .= "\n\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t}";
 			}	
 			else if ($this->typeList[$x] == "DATE")
 			{
-				$this->string .= "\n\t\t\t{";		
-				$this->string .= "\n\t\t\t\ttype: 'date',";							
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t{";
+				$this->string .= "\n\t\t\t\ttype: 'date',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "TINYINT")
 			{
 				$this->string .= "\n\t\t\t{";
-				$this->string .= "\n\t\t\t\ttype: 'boolean',";							
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\ttype: 'boolean',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			else if ( ($this->typeList[$x] == "FLOAT")  || ($this->typeList[$x] == "INT") || ($this->typeList[$x] == "DOUBLE") )
 			{
 				$this->string .= "\n\t\t\t{";
-				$this->string .= "\n\t\t\t\ttype: 'numeric',";							
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\ttype: 'numeric',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			else			
 			{
-				$this->string .= "\n\t\t\t{";		
-				$this->string .= "\n\t\t\t\ttype: 'string',";							
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t{";
+				$this->string .= "\n\t\t\t\ttype: 'string',";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			$x++;
@@ -745,7 +745,7 @@ class ObjectExtjs
 		$this->string .= $this->CreatePagingFunction();
 		$this->string .= $this->CreateGridFunction();
 		$this->string .= $this->CreateFormFunction();
-		$this->string .= "\n\t$this->separator\n\t";		
+		$this->string .= "\n\t$this->separator\n\t";
 		$this->string .= "\n\t\t// Renderizamos el formulario al cuerpo del HTML";
 		$this->string .= "\n\t\tform.render(Ext.getBody());";
 		$this->string .= "\n\t$this->separator\n\t";
@@ -767,7 +767,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\tstore.on('load', function() {";
 		$this->string .= "\n\t\t\tvar countRowsGrid = store.getCount();    //Cuenta la cantidad de registros en el grid";
 		$this->string .= "\n\t\t\t// verificamos la cantidad de registros";
-		$this->string .= "\n\t\t\tif (countRowsGrid>0) {";	
+		$this->string .= "\n\t\t\tif (countRowsGrid>0) {";
 		$this->string .= "\n\t\t\t\t// forzamos la seleccion del primer registro";
 		$this->string .= "\n\t\t\t\tgrid.getSelectionModel().selectFirstRow();";
 		$this->string .= "\n\t\t\t}";
@@ -783,7 +783,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\tsetTimeout(function(){";
 		$this->string .= "\n\t\t\tExt.get('loading').remove();";
 		$this->string .= "\n\t\t\tExt.get('loading-mask').fadeOut({remove:true});	";
-		$this->string .= "\n\t\t}, 250);";		
+		$this->string .= "\n\t\t}, 250);";
 		$this->string .= "\n\t}\t//Fin funcion LoadAndShowGrid";
 		$this->string .= "\n}\t//Fin funcion Cargar";
 	}
@@ -815,7 +815,7 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
 				$this->string .= "\n\t\t\t\twidth: 30,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}		
 			else if ($this->typeList[$x] == "DATE")
@@ -826,7 +826,7 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\tsortable: true,";
 				$this->string .= "\n\t\t\t\t// Formato para Mostrar en el grid";
 	            $this->string .= "\n\t\t\t\trenderer: Ext.util.Format.dateRenderer('d/m/Y'),";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			else	
@@ -835,7 +835,7 @@ class ObjectExtjs
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
 				$this->string .= "\n\t\t\t\twidth: 30,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			$x++;
@@ -867,22 +867,22 @@ class ObjectExtjs
 	{
 		$this->string .= "\n\t$this->separator\n\t";
 		$this->string .= $this->CreateComments("Limpiar los controles del Formulario",'',"void");
-		$this->string .= "Limpiar = function ()\n{";	
-		$this->string .="\n\tExt.getCmp('co_".rtrim(strtolower($this->objectName),s)."').reset();";			
+		$this->string .= "Limpiar = function ()\n{";
+		$this->string .="\n\tExt.getCmp('co_".rtrim(strtolower($this->objectName),s)."').reset();";
 		$x = 0;
 		foreach ($this->attributeList as $attribute)
 		{
 			if ($this->renderList[$x] == "Ext.form.ComboBox")
 			{
-				$this->string .="\n\tExt.getCmp('".strtolower($attribute)."').clearValue();";					
+				$this->string .="\n\tExt.getCmp('".$attribute."').clearValue();";
 			}
 			else 
 			{
-				$this->string .="\n\tExt.getCmp('".strtolower($attribute)."').reset();";	
+				$this->string .="\n\tExt.getCmp('".$attribute."').reset();";
 			}
 			if ($x == 0)
 			{
-				//$focus	= "\n\tExt.getCmp('".strtolower($attribute)."').focus();";
+				//$focus	= "\n\tExt.getCmp('".$attribute."').focus();";
 			}			
 			$x++;
 		}
@@ -896,29 +896,29 @@ class ObjectExtjs
 	{
 		$this->string .= "\n\t$this->separator\n\t";
 		$this->string .= $this->CreateComments("Habilitar los controles del Formulario",'',"void");
-		$this->string .= "Habilitar = function ()\n{";	
+		$this->string .= "Habilitar = function ()\n{";
 		$this->string .="\n\tExt.getCmp('co_".rtrim(strtolower($this->objectName),s)."').enable();";
 		$x = 0;
 		foreach ($this->attributeList as $attribute)
 		{
 			if ($this->renderList[$x] == "Ext.form.ComboBox")
 			{
-				$this->string .="\n\tExt.getCmp('".strtolower($attribute)."').enable();";					
+				$this->string .="\n\tExt.getCmp('".$attribute."').enable();";
 			}
 			else 
 			{
-				$this->string .="\n\tExt.getCmp('".strtolower($attribute)."').enable();";	
+				$this->string .="\n\tExt.getCmp('".$attribute."').enable();";
 			}
 			if ($x == 0)
 			{
-				$focus	= "\n\tExt.getCmp('".strtolower($attribute)."').focus();";
+				$focus	= "\n\tExt.getCmp('".$attribute."').focus();";
 			}			
 			$x++;
 		}
-		$this->string .="\n\tExt.getCmp('form').btnGuardar.enable();";	
-		$this->string .="\n\tExt.getCmp('form').btnEliminar.disable();";	
+		$this->string .="\n\tExt.getCmp('form').btnGuardar.enable();";
+		$this->string .="\n\tExt.getCmp('form').btnEliminar.disable();";
 		$this->string .="\n\tExt.getCmp('form').btnAgregar.disable();";	
-		$this->string .= $focus;		
+		$this->string .= $focus;
 		$this->string .= "\n}";
 	}
 	
@@ -928,25 +928,25 @@ class ObjectExtjs
 		$this->string .= "\n\t$this->separator\n\t";
 		$this->string .= $this->CreateComments("Deshabilitar los controles del Formulario",'',"void");
 		$this->string .= "Deshabilitar = function (ds)\n{";	
-		$this->string .="\n\tExt.getCmp('co_".rtrim(strtolower($this->objectName),s)."').disable();";			
+		$this->string .="\n\tExt.getCmp('co_".rtrim(strtolower($this->objectName),s)."').disable();";
 		$x = 0;
 		foreach ($this->attributeList as $attribute)
 		{
 			if ($this->renderList[$x] == "Ext.form.ComboBox")
 			{
-				$this->string .="\n\tExt.getCmp('".strtolower($attribute)."').disable();";					
+				$this->string .="\n\tExt.getCmp('".$attribute."').disable();";
 			}
 			else 
 			{
-				$this->string .="\n\tExt.getCmp('".strtolower($attribute)."').disable();";	
+				$this->string .="\n\tExt.getCmp('".$attribute."').disable();";
 			}
 			if ($x == 0)
 			{
-				$focus	= "\n\tExt.getCmp('".strtolower($attribute)."').focus();";
-			}			
+				$focus	= "\n\tExt.getCmp('".$attribute."').focus();";
+			}
 			$x++;
 		}
-		$this->string .= "\n\tExt.getCmp('form').btnGuardar.disable();";	
+		$this->string .= "\n\tExt.getCmp('form').btnGuardar.disable();";
 		$this->string .= "\n\tExt.getCmp('form').btnAgregar.enable();";	
 		$this->string .= "\n\tvar countRowsGrid = ds.getTotalCount();    //Cuenta la cantidad de registros en el grid";
 		$this->string .= "\n\t// verificamos la cantidad de registros";
@@ -954,7 +954,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t// forzamos la seleccion del primer registro";
 		$this->string .= "\n\t\tExt.getCmp('grid').getSelectionModel().selectFirstRow();";
 		$this->string .= "\n\t}";
-		$this->string .= "\n\telse {";	
+		$this->string .= "\n\telse {";
 		$this->string .= "\n\t\t// Deshabilitamos el boton de eliminar ya que no hay nada que eliminar";
 		$this->string .= "\n\t\tExt.getCmp('form').btnEliminar.disable();";
 		$this->string .= "\n\t}";
@@ -984,14 +984,14 @@ class ObjectExtjs
 		$this->string .= "\n\t\t// call will return before the response has been recieved. ";
 		$this->string .= "\n\t\t// Process any returned data in a callback function. ";
 		$this->string .= "\n\t\tnew Ext.data.Connection().request({";
-		$this->string .= "\n\t\t\turl:'controller.".strtolower($this->objectName).".php?accion=Guardar',";
+		$this->string .= "\n\t\t\turl:'controllers/controller.".strtolower($this->objectName).".php?accion=Guardar',";
 		$this->string .= "\n\t\t\tmethod: 'POST',";
 		$this->string .= "\n\t\t\twaitTitle: ' ',";
 		$this->string .= "\n\t\t\twaitMsg: 'Guardando...',";
 		$this->string .= "\n\t\t\tparams: {data: Ext.encode(form.getForm().getValues())},";
 		$this->string .= "\n\t\t\tsuccess:requestSuccessful,";
 		$this->string .= "\n\t\t\tfailure: requestFailed";
-		$this->string .= "\n\t\t});                  ";		
+		$this->string .= "\n\t\t});                  ";
 		$this->string .= "\n\t\t// Recargar los registros del cache desde el proxy a traves del JsonReader configurado.";
 		$this->string .= "\n\t\tds.reload();";
 		$this->string .= "\n\t} else {";
@@ -1071,7 +1071,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t\t\t// call will return before the response has been recieved. ";
 		$this->string .= "\n\t\t\t\t// Process any returned data in a callback function. ";
 		$this->string .= "\n\t\t\t\tnew Ext.data.Connection().request({";
-		$this->string .= "\n\t\t\t\t\turl: 'controller.".strtolower($this->objectName).".php?accion=Eliminar',";
+		$this->string .= "\n\t\t\t\t\turl: 'controllers/controller.".strtolower($this->objectName).".php?accion=Eliminar',";
 		$this->string .= "\n\t\t\t\t\t// Obtenemos el id del item seleccionado";
 		$this->string .= "\n\t\t\t\t\tparams: {data: selectedItems[0].id},";
 		$this->string .= "\n\t\t\t\t\tfailure: requestFailed,";
@@ -1147,7 +1147,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t\t\tsingleSelect: true,";
 		$this->string .= "\n\t\t\t\tlisteners: {";
 		$this->string .= "\n\t\t\t\t\trowselect: function (sm, row, rec) {";
-		$this->string .= "\n\t\t\t\t\t\tExt.getCmp('form').getForm().loadRecord(rec);									";
+		$this->string .= "\n\t\t\t\t\t\tExt.getCmp('form').getForm().loadRecord(rec);";
 		$this->string .= "\n\t\t\t\t\t}";
 		$this->string .= "\n\t\t\t\t}";
 		$this->string .= "\n\t\t\t}),";
@@ -1186,7 +1186,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t\t// Especifica que los items ahora seran ordenados en columnas";
 		$this->string .= "\n\t\t\titems: [{";
 		$this->string .= "\n\t\t\t\tcolumnWidth: 0.4,";
-		$this->string .= "\n\t\t\t\tlayout: 'fit',						";
+		$this->string .= "\n\t\t\t\tlayout: 'fit',";
 		$this->string .= "\n\t\t\t\tbodyStyle: 'padding:0 10px 0 0px',";
 		$this->string .= "\n\t\t\t\titems: grid";
 		$this->string .= "\n\t\t\t},";
@@ -1313,7 +1313,12 @@ class ObjectExtjs
 		$this->string .= "//".$count." Campos distribuidos en 2 Columnas;";
 		$this->string .= $this->separator;
 		foreach ($this->arrayControls as $control)
-		{			
+		{
+			$controles .= $control;
+			if ($x != $count - 1)
+			{
+				$controles .= ",";
+			}
 			if (($x % 2) != 0)
 			{ // es par 
 				$itemsColumna1 .= $control;
@@ -1329,23 +1334,25 @@ class ObjectExtjs
 				{
 					$itemsColumna2 .= ",";
 				}
-			} 			
+			}
 			$x++;
-		}		
+		}
 		$this->string .= "\n\t\t			items: [{";
-		$this->string .= "\n\t\t					columnWidth: .5,";
+		$this->string .= "\n\t\t					columnWidth: 1,";
 		$this->string .= "\n\t\t					layout: 'form',";
 		$this->string .= "\n\t\t					labelWidth: 50,";
 		$this->string .= "\n\t\t					border: false,";
-		$this->string .= "\n\t\t					items: [".$itemsColumna1."]";
-		$this->string .= "\n\t\t				},";
-		$this->string .= "\n\t\t				{";
+		$this->string .= "\n\t\t					items: [".$controles."]";
+		$this->string .= "\n\t\t				}";
+		/*
+		$this->string .= "\n\t\t				,{";
 		$this->string .= "\n\t\t					columnWidth: .5,";
 		$this->string .= "\n\t\t					layout: 'form',";
 		$this->string .= "\n\t\t					labelWidth: 50,";
 		$this->string .= "\n\t\t					border: false,";
 		$this->string .= "\n\t\t					items: [".$itemsColumna2."]";
 		$this->string .= "\n\t\t				}";
+		*/ 
 	}
 
 }

@@ -25,7 +25,7 @@
 				<br /><a href="http://groups.google.com/group/Php-Object-Generator" title="Php object generator google group">The POG Google group</a>
 				<br /><a href="http://www.phpobjectgenerator.com/plog/tutorials" title="php object generator tutorials and documentation">The POG Tutorials</a>
 				<br /><a href="http://plugins.phpobjectgenerator.com" title="POG Plugins">POG Plugins</a>
-				<br /><a href="./pog_extjs.rar" title="POG+ExtJS Source Code ">POG+ExtJS Source Code</a>
+				<br /><a href="./pog+extjs.rar" title="POG+ExtJS Source Code ">POG+ExtJS Source Code</a>
 			</div>
 			<!-- left -->
 	</body>

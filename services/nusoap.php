@@ -52,6 +52,10 @@ require_once('class.soap_server.php');*/
 
 // class variable emulation
 // cf. http://www.webkreator.com/php/techniques/php-static-class-variables.html
+if (!isset($_transient)) 
+{
+    $_transient['static']['nusoap_base'] = new stdClass();
+}
 $GLOBALS['_transient']['static']['nusoap_base']->globalDebugLevel = 9;
 
 /**
@@ -3627,7 +3631,7 @@ class soap_server extends nusoap_base {
 	function serialize_return() {
 		$this->debug('Entering serialize_return methodname: ' . $this->methodname . ' methodURI: ' . $this->methodURI);
 		// if fault
-		if (isset($this->methodreturn) && (get_class($this->methodreturn) == 'soap_fault')) {
+		if (isset($this->methodreturn) && (get_class((object)$this->methodreturn) == 'soap_fault')) {
 			$this->debug('got a fault object from method');
 			$this->fault = $this->methodreturn;
 			return;

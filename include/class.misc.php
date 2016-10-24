@@ -1,4 +1,4 @@
-<?
+<?php
 class Misc
 {
 	var $string;

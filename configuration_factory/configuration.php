@@ -19,7 +19,7 @@ $configuration['db_encoding'] = &db_encoding;
 $configuration['db']	= 'test'; 		//	database name
 $configuration['host']	= 'localhost';	//	database host
 $configuration['user']	= 'root';		//	database user
-$configuration['pass']	= 'pass';		//	database password
+$configuration['pass']	= 'abc123';		//	database password
 $configuration['port'] 	= '3306';		//	database port
 
 

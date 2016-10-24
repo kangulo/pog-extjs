@@ -46,7 +46,7 @@ class ObjectExtjs
 		$this->string .= "\n * \$Id:			".$this->objectName."_grid.php $";
 		$this->string .= "\n * @package		".$GLOBALS['configuration']['app']."";
 		$this->string .= "\n * @author		".$GLOBALS['configuration']['author'];
-		$this->string .= "\n * @copyright	© 2013, POG+EXTJS - Kayak Innovations, C.A.";
+		$this->string .= "\n * @copyright	".$GLOBALS['configuration']['company'];
 		$this->string .= "\n * @version		v1.0";
 		$this->string .= "\n * @created		".date('l jS \of F Y h:i:s A');
 		$this->string .= "\n * @link		http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(urlencode(var_export($this->renderList, true)));
@@ -97,7 +97,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t\t'->', ";
 		$this->string .= "\n\t\t\t{ ";
 		$this->string .= "\n\t\t\t\ttext: 'Refrescar',";
-		$this->string .= "\n\t\t\t\ticonCls: 'icon-refresh',";
+		$this->string .= "\n\t\t\t\ticonCls: 'icon-search',";
 		$this->string .= "\n\t\t\t\thandler: this.onSearch,";
 		$this->string .= "\n\t\t\t\tscope: this";
 		$this->string .= "\n\t\t\t}";
@@ -132,38 +132,38 @@ class ObjectExtjs
 			if ($x == 0)
 			{
 				$this->string .= "\n\t\t\t{";
-				$this->string .= "\n\t\t\t\tid: 'co_".rtrim(strtolower($this->objectName),s)."',";
+				$this->string .= "\n\t\t\t\tid: 'co_".rtrim(strtolower($this->objectName),'s')."',";
 				$this->string .= "\n\t\t\t\theader: 'Id',";
 				$this->string .= "\n\t\t\t\twidth: 30,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
 				$this->string .= "\n\t\t\t\thidden: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: 'co_".rtrim(strtolower($this->objectName),s)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: 'co_".rtrim(strtolower($this->objectName),'s')."'";
 				$this->string .= "\n\t\t\t},";
 				$this->string .= "\n\t\t\t{";
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
-				$this->string .= "\n\t\t\t\twidth: 30,";
+				$this->string .= "\n\t\t\t\twidth: 100,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}		
 			else if ($this->typeList[$x] == "DATE")
 			{
 				$this->string .= "\n\t\t\t{";
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
-				$this->string .= "\n\t\t\t\twidth: 30,";
+				$this->string .= "\n\t\t\t\twidth: 100,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
 				$this->string .= "\n\t\t\t\t// Formato para Mostrar en el grid";
 	            $this->string .= "\n\t\t\t\trenderer: Ext.util.Format.dateRenderer('d/m/Y'),";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			else	
 			{
 				$this->string .= "\n\t\t\t{";
 				$this->string .= "\n\t\t\t\theader: '".ucfirst(strtolower($attribute))."',";
-				$this->string .= "\n\t\t\t\twidth: 30,";
+				$this->string .= "\n\t\t\t\twidth: 100,";
 				$this->string .= "\n\t\t\t\tsortable: true,";
-				$this->string .= "\n\t\t\t\tdataIndex: '".strtolower($attribute)."'";
+				$this->string .= "\n\t\t\t\tdataIndex: '".$attribute."'";
 				$this->string .= "\n\t\t\t}";
 			}
 			$x++;
@@ -212,11 +212,11 @@ class ObjectExtjs
 		$this->string .="\n\t\t*/";
 		$this->string .="\n\t\tExt.define('Model.".$this->objectName."', {";
 		$this->string .="\n\t\t\textend: 'Ext.data.Model',";
-		$this->string .="\n\t\t\tidProperty: 'co_".rtrim(strtolower($this->objectName),s)."',//<--- el campo clave primaria de los registros.";		
+		$this->string .="\n\t\t\tidProperty: 'co_".rtrim(strtolower($this->objectName),'s')."',//<--- el campo clave primaria de los registros.";		
 		$this->string .="\n\t\t\tfields:[";	
 		$this->string .="\n\t\t\t{";
-		$this->string .="\n\t\t\t\tname: 'co_".rtrim(strtolower($this->objectName),s)."',";
-		$this->string .="\n\t\t\t\ttype: 'string',";							
+		$this->string .="\n\t\t\t\tname: 'co_".rtrim(strtolower($this->objectName),'s')."',";
+		$this->string .="\n\t\t\t\ttype: 'string',";
 		$this->string .="\n\t\t\t},";
 		$x = 0;		
 		foreach ($this->attributeList as $attribute)
@@ -224,57 +224,57 @@ class ObjectExtjs
 			if ($this->typeList[$x] == "VARCHAR(255)")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TEXT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "DATE")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'date',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'date',";
 				$this->string .="\n\t\t\t}";
 			}	
 			else if ($this->typeList[$x] == "INT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'int',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'int',";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "TINYINT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'bool',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'bool',";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "FLOAT")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'float',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'float',";
 				$this->string .="\n\t\t\t}";
 			}
 			else if ($this->typeList[$x] == "DOUBLE")
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'float',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'float',";
 				$this->string .="\n\t\t\t}";
 			}
 			else			
 			{
 				$this->string .="\n\t\t\t{";
-				$this->string .="\n\t\t\t\tname: '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\t\ttype: 'string',";							
+				$this->string .="\n\t\t\t\tname: '".$attribute."',";
+				$this->string .="\n\t\t\t\ttype: 'string',";
 				$this->string .="\n\t\t\t}";
 			}
 			$x++;
@@ -343,7 +343,7 @@ class ObjectExtjs
 		$this->string .= "\n * \$Id:			".$this->objectName."_form.php $";
 		$this->string .= "\n * @package		".$GLOBALS['configuration']['app']."";
 		$this->string .= "\n * @author		".$GLOBALS['configuration']['author'];
-		$this->string .= "\n * @copyright	© 2013, POG+EXTJS - Kayak Innovations, C.A.";
+		$this->string .= "\n * @copyright	".$GLOBALS['configuration']['company'];
 		$this->string .= "\n * @version		v1.0";
 		$this->string .= "\n * @created		".date('l jS \of F Y h:i:s A');
 		$this->string .= "\n * @link		http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(urlencode(var_export($this->renderList, true)));
@@ -487,7 +487,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t\t\t\t\t\t callback: function(records, operation, success) {";
 		$this->string .= "\n\t\t\t\t\t\t\t\t// the operation object";
 		$this->string .= "\n\t\t\t\t\t\t\t\t// contains all of the details of the load operation";
-		$this->string .= "\n\t\t\t\t\t\t\t\t selectionModel.select(grid.getStore().getById(object.co_".rtrim(strtolower($this->objectName),s).").index);";
+		$this->string .= "\n\t\t\t\t\t\t\t\t selectionModel.select(grid.getStore().getById(object.co_".rtrim(strtolower($this->objectName),'s').").index);";
 		$this->string .= "\n\t\t\t\t\t\t\t\t}";
 		$this->string .= "\n\t\t\t\t\t\t});";
 		$this->string .= "\n\t\t\t\t},";
@@ -547,7 +547,7 @@ class ObjectExtjs
 		$this->string .= "\n\t*  Eliminar un registro seleccionado en el grid";
 		$this->string .= "\n\t*/";
 		$this->string .= "\n\tonEliminar: function () {";
-		$this->string .= "\n\t\tif (form.co_".rtrim(strtolower($this->objectName),s).".getValue() !== '') {";
+		$this->string .= "\n\t\tif (form.co_".rtrim(strtolower($this->objectName),'s').".getValue() !== '') {";
 		$this->string .= "\n\t\t\tExt.MessageBox.confirm('Eliminar', 'Estas seguro que desea Eliminar el registro?',";
 		$this->string .= "\n";
 		$this->string .= "\n\t\t\tfunction (btn) {";
@@ -555,7 +555,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t\t\t\tExt.Ajax.request({";
 		$this->string .= "\n\t\t\t\t\t\turl: 'controllers/controller.".strtolower($this->objectName).".php?accion=Eliminar',";
 		$this->string .= "\n\t\t\t\t\t\tparams: {";
-		$this->string .= "\n\t\t\t\t\t\t\tco_".rtrim(strtolower($this->objectName),s).": form.co_".rtrim(strtolower($this->objectName),s).".getValue()";
+		$this->string .= "\n\t\t\t\t\t\t\tco_".rtrim(strtolower($this->objectName),'s').": form.co_".rtrim(strtolower($this->objectName),'s').".getValue()";
 		$this->string .= "\n\t\t\t\t\t\t},";
 		$this->string .= "\n\t\t\t\t\t\tscope: this,";
 		$this->string .= "\n\t\t\t\t\t\tsuccess: function (r, o) {";
@@ -701,10 +701,10 @@ class ObjectExtjs
 	// -------------------------------------------------------------
 	function CreateGetColumnItems()
 	{
-		$items;
-		$itemsColumna1;
-		$itemsColumna2;
-		$campo;
+		$items = '';
+                $itemsColumna1 = '';
+                $itemsColumna2 = '';
+                $campo = '';
 		$count = count($this->arrayControls);
 		$x = 0;
 		$this->string .= $this->separator;
@@ -807,14 +807,15 @@ class ObjectExtjs
 	// -------------------------------------------------------------
 	function CreateFormFieldsFunction()
 	{
+		$x = 0;
 		$this->string .="\n\t\t/**";
 		$this->string .="\n\t\t*  Crea los campos del formulario";
 		$this->string .="\n\t\t*  @return void";
 		$this->string .="\n\t\t*/\n\t";	
-		$this->string .="\n\t\t// creamos el id co_".rtrim(strtolower($this->objectName),s);
-		$this->string .="\n\t\tthis.co_".rtrim(strtolower($this->objectName),s)." = Ext.create('Ext.form.TextField', { ";
-		$this->string .="\n\t\t\tname      :'co_".rtrim(strtolower($this->objectName),s)."',";
-		$this->string .="\n\t\t\tfieldLabel:'co_".rtrim(strtolower($this->objectName),s)."',";
+		$this->string .="\n\t\t// creamos el id co_".rtrim(strtolower($this->objectName),'s');
+		$this->string .="\n\t\tthis.co_".rtrim(strtolower($this->objectName),'s')." = Ext.create('Ext.form.TextField', { ";
+		$this->string .="\n\t\t\tname      :'co_".rtrim(strtolower($this->objectName),'s')."',";
+		$this->string .="\n\t\t\tfieldLabel:'co_".rtrim(strtolower($this->objectName),'s')."',";
 		$this->string .="\n\t\t\tlabelAlign: 'top',";
 		$this->string .="\n\t\t\tenableKeyEvents: true,";
 		$this->string .="\n\t\t\tafterLabelTextTpl: required,";
@@ -824,80 +825,79 @@ class ObjectExtjs
 		$this->string .="\n\t\t\ttabIndex  :".($x+1)."";
 		$this->string .="\n\t\t});\n\t";
 		$this->string .="\n\t\t// creamos el listener para el keypress evento";
-		$this->string .="\n\t\tthis.co_".rtrim(strtolower($this->objectName),s).".on('keypress', function(el,e) { ";
+		$this->string .="\n\t\tthis.co_".rtrim(strtolower($this->objectName),'s').".on('keypress', function(el,e) { ";
 		$this->string .="\n\t\t\tif (e.getKey() == e.ENTER) {";
 		//$this->string .="\n\t\t\t\t//me.Field.focus(true, 10);";
 		$this->string .="\n\t\t\t\tme.".$this->attributeList[1].".focus(true, 10);";
 		$this->string .="\n\t\t\t}";	
 		$this->string .="\n\t\t});\n\t";	
-		$this->string .="\n\t\tthis.co_".rtrim(strtolower($this->objectName),s).".on('focus', function() { ";
+		$this->string .="\n\t\tthis.co_".rtrim(strtolower($this->objectName),'s').".on('focus', function() { ";
 		$this->string .="\n\t\t\tthis.selectText();";
 		$this->string .="\n\t\t});";
 		$this->string .="\n";
-		$this->arrayControls[] = "co_".rtrim(strtolower($this->objectName),s);
+		$this->arrayControls[] = "co_".rtrim(strtolower($this->objectName),'s');
 		$count = count($this->attributeList);
-		
-		$x = 0;
+		$j = 0;
 		foreach ($this->attributeList as $attribute)
 		{
 			$j = $x+1;
-			$focus_control = $this->attributeList[$j];
+			$focus_control = $this->attributeList[$j-1];
 			//$this->string .= $this->renderList[$x];
 			if ($this->renderList[$x] == "Ext.form.TextField")
 			{
-				$this->string .="\n\t\t//creamos el TextField ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.TextField', {";
-				$this->string .="\n\t\t\tname      :'".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t//creamos el TextField ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.TextField', {";
+				$this->string .="\n\t\t\tname      :'".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\t\tlabelAlign: 'top',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1)."";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			elseif ($this->renderList[$x] == "Ext.form.NumberField")
 			{
-				$this->string .="\n\t\t//creamos el NumberField ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.NumberField', {";
-				$this->string .="\n\t\t\tname      :'".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t//creamos el NumberField ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.NumberField', {";
+				$this->string .="\n\t\t\tname      :'".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\t\tlabelAlign: 'top',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1)."";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			elseif ($this->renderList[$x] == "Ext.form.Radio")
 			{
-				$this->string .="\n\t\t//creamos el RadioGroup ".strtolower($attribute)."";
-				$this->string .= "\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.RadioGroup', { ";
+				$this->string .="\n\t\t//creamos el RadioGroup ".$attribute."";
+				$this->string .= "\n\t\tthis.".$attribute." = Ext.create('Ext.form.RadioGroup', { ";
 				$this->string .= "\n\t\t\tdefaults: {";
 				$this->string .= "\n\t\t\t\tflex: 1";
 				$this->string .= "\n\t\t\t},";
-				$this->string .= "\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .= "\n\t\t\tlabelAlign: 'top',";
 				$this->string .= "\n\t\t\tlayout: 'hbox',";
 				$this->string .= "\n\t\t\titems: [";
 				$this->string .= "\n\t\t\t\t{";
 				$this->string .= "\n\t\t\t\t\tboxLabel  : 'V',";
-				$this->string .= "\n\t\t\t\t\tname      : '".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\t\t\tname      : '".$attribute."',";
 				$this->string .= "\n\t\t\t\t\tinputValue: 'V',";
 				$this->string .= "\n\t\t\t\t}, {";
 				$this->string .= "\n\t\t\t\t\tboxLabel  : 'E',";
-				$this->string .= "\n\t\t\t\t\tname      : '".strtolower($attribute)."',";
+				$this->string .= "\n\t\t\t\t\tname      : '".$attribute."',";
 				$this->string .= "\n\t\t\t\t\tinputValue: 'E',";
 				$this->string .= "\n\t\t\t\t}";
 				$this->string .= "\n\t\t\t]";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			else if ($this->renderList[$x] == "Ext.form.ComboBox")
 			{
@@ -914,8 +914,8 @@ class ObjectExtjs
 				$this->string .= "\n\t\t/*Ext.define('Model_".ucfirst($attribute)."', {";
 				$this->string .= "\n\t\t\textend: 'Ext.data.Model',";
 				$this->string .= "\n\t\t\tfields: [";
-				$this->string .= "\n\t\t\t\t{name: 'co_".strtolower($attribute)."', type: 'int'},";
-				$this->string .= "\n\t\t\t\t{name: 'nb_".strtolower($attribute)."',  type: 'string'}";
+				$this->string .= "\n\t\t\t\t{name: 'co_".$attribute."', type: 'int'},";
+				$this->string .= "\n\t\t\t\t{name: 'nb_".$attribute."',  type: 'string'}";
 				$this->string .= "\n\t\t\t]";
 				$this->string .= "\n\t\t});";
 				$this->string .= "\n";
@@ -934,42 +934,42 @@ class ObjectExtjs
 				$this->string .= "\n";
 				$this->string .="\n\t\t// Un Store simple de prueba";
 				$this->string .= "\n\t\tvar Store_".ucfirst($attribute)." = Ext.create('Ext.data.Store', {";
-				$this->string .= "\n\t\t\tfields: ['co_".strtolower($attribute)."', 'nb_".strtolower($attribute)."'],";
+				$this->string .= "\n\t\t\tfields: ['co_".$attribute."', 'nb_".$attribute."'],";
 				$this->string .= "\n\t\t\tdata : [";
-				$this->string .= "\n\t\t\t\t{'co_".strtolower($attribute)."':'1', 'nb_".strtolower($attribute)."':'Option 1'},";
-				$this->string .= "\n\t\t\t\t{'co_".strtolower($attribute)."':'2', 'nb_".strtolower($attribute)."':'Option 2'}";
+				$this->string .= "\n\t\t\t\t{'co_".$attribute."':'1', 'nb_".$attribute."':'Option 1'},";
+				$this->string .= "\n\t\t\t\t{'co_".$attribute."':'2', 'nb_".$attribute."':'Option 2'}";
 				$this->string .= "\n\t\t\t]";
 				$this->string .= "\n\t\t});";
 				$this->string .= "\n";
-				$this->string .="\n\t\t// creamos el ComboBox ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.ComboBox', {";
-				$this->string .="\n\t\t\tname          : '".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el ComboBox ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.ComboBox', {";
+				$this->string .="\n\t\t\tname          : '".$attribute."',";
 				$this->string .="\n\t\t\tlabelAlign: 'top',";
-				$this->string .="\n\t\t\tfieldLabel    : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\thiddenName    : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tvalueField    : 'co_".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tdisplayField  : 'nb_".strtolower($attribute)."',";
+				$this->string .="\n\t\t\tfieldLabel    : '".$attribute."',";
+				$this->string .="\n\t\t\thiddenName    : '".$attribute."',";
+				$this->string .="\n\t\t\tvalueField    : 'co_".$attribute."',";
+				$this->string .="\n\t\t\tdisplayField  : 'nb_".$attribute."',";
 				$this->string .="\n\t\t\ttabIndex      :".($x+1).",";
 				$this->string .="\n\t\t\tstore         : Store_".ucfirst($attribute).",";
 				$this->string .="\n\t\t\ttypeAhead     : true,";
 				$this->string .="\n\t\t\tforceSelection: true,";
 				$this->string .="\n\t\t\tmode          : 'local',";
 				$this->string .="\n\t\t\ttriggerAction : 'all',";
-				$this->string .="\n\t\t\temptyText     : 'Seleccione un ".strtolower($attribute)."...',";
+				$this->string .="\n\t\t\temptyText     : 'Seleccione un ".$attribute."...',";
 				$this->string .="\n\t\t\twidth         : 160";
 				$this->string .="\n\t\t});\n\t";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 					
 			}
 			else if ($this->renderList[$x] == "Ext.form.DateField")
 			{
-				$this->string .="\n\t\t// creamos el DateField ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.DateField', {";
-				$this->string .="\n\t\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel: '".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el DateField ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.DateField', {";
+				$this->string .="\n\t\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel: '".$attribute."',";
 				$this->string .="\n\t\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\t\tlabelAlign: 'top',";
 				$this->string .="\n\t\t\ttabIndex   :".($x+1).",";
@@ -977,17 +977,17 @@ class ObjectExtjs
 				$this->string .="\n\t\t\tsubmitFormat:'Y-m-d'";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = "".strtolower($attribute)."";  
+				$this->arrayControls[] = "".$attribute."";  
 			}
 			else if ($this->renderList[$x] == "Ext.form.TextArea")
 			{
-				$this->string .="\n\t\t// creamos el TextArea ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.TextArea', { ";
-				$this->string .="\n\t\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el TextArea ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.TextArea', { ";
+				$this->string .="\n\t\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\tenableKeyEvents  :true,";
 				$this->string .="\n\t\t\tlabelAlign: 'top',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1).",";
@@ -996,89 +996,89 @@ class ObjectExtjs
 				$this->string .="\n\t\t\theight    : 100";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			else if ($this->renderList[$x] == "Ext.form.Checkbox")
 			{
-				$this->string .="\n\t\t// creamos el Checkbox ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.Checkbox', { ";
-				$this->string .="\n\t\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el Checkbox ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.Checkbox', { ";
+				$this->string .="\n\t\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\tlabelAlign: 'top',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1).",";
 				$this->string .="\n\t\t\tsubmitOffValue: 0,";
 				$this->string .="\n\t\t\tsubmitOnValue:1";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 /*
 			else if ($this->renderList[$x] == "Ext.form.Checkbox")
 			{
-				$this->string .="\n\t\t// creamos el Checkbox ".strtolower($attribute)."";
-				$this->string .="\n\t\tvar ".strtolower($attribute)." = new Ext.form.Checkbox({ ";
-				$this->string .="\n\t\t\tid        : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el Checkbox ".$attribute."";
+				$this->string .="\n\t\tvar ".$attribute." = new Ext.form.Checkbox({ ";
+				$this->string .="\n\t\t\tid        : '".$attribute."',";
+				$this->string .="\n\t\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1)."";
 				$this->string .="\n\t\t});\n\t";				
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 */
 			else if ($this->renderList[$x] == "Ext.form.HtmlEditor")
 			{
-				$this->string .="\n\t\t// creamos el TextArea ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.HtmlEditor', { ";
-				$this->string .="\n\t\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el TextArea ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.HtmlEditor', { ";
+				$this->string .="\n\t\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1).",";
 				$this->string .="\n\t\t\thideLabel : true,";
 				$this->string .="\n\t\t\tanchor    : '98%',";
 				$this->string .="\n\t\t\theight    : 200";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			else if ($this->renderList[$x] == "Ext.form.TimeField")
 			{
-				$this->string .="\n\t\t// creamos el TextField ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.TimeField', { ";
-				$this->string .="\n\t\t\tname      : '".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel: '".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el TextField ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.TimeField', { ";
+				$this->string .="\n\t\t\tname      : '".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel: '".$attribute."',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1).",";
 				$this->string .="\n\t\t\tminValue  : '8:00am',";
 				$this->string .="\n\t\t\tmaxValue  : '6:00pm'";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			else
 			{
-				$this->string .="\n\t\t// creamos el TextField ".strtolower($attribute)."";
-				$this->string .="\n\t\tthis.".strtolower($attribute)." = Ext.create('Ext.form.TextField', {";
-				$this->string .="\n\t\t\tname      :'".strtolower($attribute)."',";
-				$this->string .="\n\t\t\tfieldLabel:'".strtolower($attribute)."',";
+				$this->string .="\n\t\t// creamos el TextField ".$attribute."";
+				$this->string .="\n\t\tthis.".$attribute." = Ext.create('Ext.form.TextField', {";
+				$this->string .="\n\t\t\tname      :'".$attribute."',";
+				$this->string .="\n\t\t\tfieldLabel:'".$attribute."',";
 				$this->string .="\n\t\t\ttabIndex  :".($x+1)."";
 				$this->string .="\n\t\t});";
 				$this->string .="\n";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('focus', function() { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('focus', function() { ";
 				$this->string .="\n\t\t\tthis.selectText();";
 				$this->string .="\n\t\t});";
-				$this->arrayControls[] = strtolower($attribute);
+				$this->arrayControls[] = $attribute;
 			}
 			if ($x != $count - 1)
 			{
 				$this->string .="\n";
 				$this->string .="\n\t\t// creamos el listener para el keypress evento";
-				$this->string .="\n\t\tthis.".strtolower($attribute).".on('keypress', function(el,e) { ";
+				$this->string .="\n\t\tthis.".$attribute.".on('keypress', function(el,e) { ";
 				$this->string .="\n\t\t\tif (e.getKey() == e.ENTER) {";
 				//$this->string .="\n\t\t\t\t//me.Field.focus(true, 10);";
 				$this->string .="\n\t\t\t\tme.$focus_control.focus(true, 10);";
@@ -1102,7 +1102,7 @@ class ObjectExtjs
 		$this->string .= "\n * \$Id:			main.php $";
 		$this->string .= "\n * @package		".$GLOBALS['configuration']['app']."";
 		$this->string .= "\n * @author		".$GLOBALS['configuration']['author'];
-		$this->string .= "\n * @copyright	© 2013, POG+EXTJS - Kayak Innovations, C.A.";
+		$this->string .= "\n * @copyright	".$GLOBALS['configuration']['company'];
 		$this->string .= "\n * @version		v1.0";
 		$this->string .= "\n * @created		".date('l jS \of F Y h:i:s A');
 		$this->string .= "\n * @link		http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(urlencode(var_export($this->renderList, true)));
@@ -1172,11 +1172,11 @@ class ObjectExtjs
 		$this->string .= "\n\t\t//pnlImages.grdImages.getStore().getProxy().extraParams['co_obra'] = record.data.co_producto;";
 		$this->string .= "\n\t\t//pnlImages.grdImages.getStore().load();";
 		$this->string .= "\n";
-		$this->string .= "\n\t\tif (record.data.co_".rtrim(strtolower($this->objectName),s)." > 0) { ";
+		$this->string .= "\n\t\tif (record.data.co_".rtrim(strtolower($this->objectName),'s')." > 0) { ";
 		$this->string .= "\n\t\t\tform.getForm().load({";
 		$this->string .= "\n\t\t\t\turl: 'controllers/controller.".$this->objectName.".php?accion=Get',";
 		$this->string .= "\n\t\t\t\tparams:{";
-		$this->string .= "\n\t\t\t\t\tco_".rtrim(strtolower($this->objectName),s).": record.data.co_".rtrim(strtolower($this->objectName),s)."";
+		$this->string .= "\n\t\t\t\t\tco_".rtrim(strtolower($this->objectName),'s').": record.data.co_".rtrim(strtolower($this->objectName),'s')."";
 		$this->string .= "\n\t\t\t\t},";
 		$this->string .= "\n\t\t\t\tsuccess: function(f, action) {";
 		$this->string .= "\n\t\t\t\t\tform.down('button[name=btnNuevo]').setVisible(true);";
@@ -1212,7 +1212,7 @@ class ObjectExtjs
 		$this->string .= "\n * \$Id:			main.php $";
 		$this->string .= "\n * @package		".$GLOBALS['configuration']['app']."";
 		$this->string .= "\n * @author		".$GLOBALS['configuration']['author'];
-		$this->string .= "\n * @copyright	© 2013, POG+EXTJS - Kayak Innovations, C.A.";
+		$this->string .= "\n * @copyright	".$GLOBALS['configuration']['company'];
 		$this->string .= "\n * @version		v1.0";
 		$this->string .= "\n * @created		".date('l jS \of F Y h:i:s A');
 		$this->string .= "\n * @link		http://localhost/pog+extjs/?language=".$this->language."&wrapper=pdo&pdoDriver=".$this->pdoDriver."&extjsVersion=".$this->extjsVersion."&objectName=".urlencode($this->objectName)."&attributeList=".urlencode(var_export($this->attributeList, true))."&typeList=".urlencode(urlencode(var_export($this->typeList, true)))."&renderList=".urlencode(urlencode(var_export($this->renderList, true)));
@@ -1290,7 +1290,7 @@ class ObjectExtjs
 		$this->string .= "\n\t\t  form.getForm().load({";
 		$this->string .= "\n\t\t\turl: 'controllers/controller.".$this->objectName.".php?accion=Get',";
 		$this->string .= "\n\t\t\tparams:{";
-		$this->string .= "\n\t\t\t  co_".rtrim(strtolower($this->objectName),s).": record.data.co_".rtrim(strtolower($this->objectName),s)."";
+		$this->string .= "\n\t\t\t  co_".rtrim(strtolower($this->objectName),'s').": record.data.co_".rtrim(strtolower($this->objectName),'s')."";
 		$this->string .= "\n\t\t\t},";
 		$this->string .= "\n\t\t\tsuccess: function(f, action) {";
 		$this->string .= "\n\t\t\t  //~ store = form.CboSubCategorias.getStore();";

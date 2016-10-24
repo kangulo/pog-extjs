@@ -70,12 +70,12 @@ if (IsPostback())
 			'pdoDriver'     => $pdoDriver,
 			'extjsVersion'  => $extjsVersion
 		);
-	/*print_r($params1);*/
+	//print_r($params1);
 	//  Genera el archivo de Extjs
 	$object1 = base64_decode($client1->call('GenerateObjectExtjs', $params1));
 	//echo $client1->debug_str;
 	//echo "*************************************************************************************************<br>";
-	$_SESSION['objectString'] = $object;
+	$_SESSION['objectString'] = $object1;
 	$_SESSION['attributeList'] = serialize($attributeList);
 	$_SESSION['typeList'] = serialize($typeList);
 	$_SESSION['renderList'] = serialize($renderList);
@@ -93,11 +93,11 @@ if (IsPostback())
 			'pdoDriver'     => $pdoDriver,
 			'extjsVersion'  => $extjsVersion
 	);
-	/*print_r($params1);*/
+	/*print_r($params2);*/
 	
 	$object2 = base64_decode($client2->call('GenerateObjectController', $params2));
 	//echo $client2->debug_str;
-	$_SESSION['objectString'] = $object;
+	$_SESSION['objectString'] = $object2;
 	$_SESSION['attributeList'] = serialize($attributeList);
 	$_SESSION['typeList'] = serialize($typeList);
 	$_SESSION['renderList'] = serialize($renderList);
@@ -144,94 +144,159 @@ else if ($GLOBALS['configuration']['soapEngine'] == "phpsoap")
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Php Object Generator (<?=$GLOBALS['configuration']['versionNumber']?><?=$GLOBALS['configuration']['revisionNumber']?>) - Open Source PHP Code Generator</title>
-		<!--<link rel="stylesheet" href="./phpobjectgenerator.css" type="text/css" />-->
-		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.phpobjectgenerator.com/plog/rss/"/>
-		<link rel="shortcut icon" href="favicon.ico" >
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	</head>
-	<body>
-		<div class="main">
-			<div class="left2">
-				<img src="./images/aboutphpobjectgenerator.jpg" alt="About Php Object Generator"/>
-				<br />PHP Object Generator, (POG) is an open source <h1>PHP code generator + ExtJS Framework</h1>&nbsp;which automatically generates clean &amp; tested Object Oriented code for your PHP4/PHP5 application. Over the years, we realized that a large portion of a PHP programmer's time is wasted on repetitive coding of the Database Access Layer of an application simply because different applications require different objects.
-				<br />
-				<br />By generating PHP objects with integrated CRUD methods, POG gives you a head start in any project. The time you save can be spent on more interesting areas of your project.<br /><a href="http://www.phpobjectgenerator.com/php_code_generator/introduction_php_code_generator.php" title="extended introduction to pog">Read more &#8250;&#8250;</a>
-				<br />
-				<br /><img src="./images/keyfeaturesphpobjectgenerator.jpg" alt="Key Features of  Php Object Generator"/>
-				<br />Generates clean &amp; tested code
-				<br />Generates CRUD methods
-				<br />Generates setup file
-				<br />Generates parent-child relations
-				<br />Generates Setup file
-				<br />Compatible with PHP4 &amp; PHP5
-				<br />Compatible with PDO
-				<br />Automatic data encoding
-				<br />Free Developer SOAP API
-				<br />Free for personal use
-				<br />Free for commercial use
-				<br />Open Source
-				<br />
-				<br />				
-				<br />
-				<br /><img src="./images/wantmorepog.jpg" alt="Want more Php Object Generator?"/>
-				<br /><a href="http://www.phpobjectgenerator.com/plog" title="php object generator weblog">The POG Weblog</a> and <a href="http://www.phpobjectgenerator.com/plog/rss/" title="POG RSS feed">RSS feed</a>.
-				<br /><a href="http://groups.google.com/group/Php-Object-Generator" title="Php object generator google group">The POG Google group</a>
-				<br /><a href="http://www.phpobjectgenerator.com/plog/tutorials" title="php object generator tutorials and documentation">The POG Tutorials</a>
-				<br /><a href="http://plugins.phpobjectgenerator.com" title="POG Plugins">POG Plugins</a>
-				<br /><a href="./pog_extjs.rar" title="POG+ExtJS Source Code ">POG+ExtJS Source Code</a>
-				<br />
-				<br />
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-					<input type="hidden" name="cmd" value="_s-xclick">
-					<input type="hidden" name="hosted_button_id" value="YX8ATWFWZFQAW">
-					<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-					<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
-				</form>
-				<br />
-				<br />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="/ico/favicon.ico">
+
+	<title>Php Object Generator (<?=$GLOBALS['configuration']['versionNumber']?><?=$GLOBALS['configuration']['revisionNumber']?>) - Open Source PHP Code Generator</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="css/dashboard.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link href="css/image-picker.css" rel="stylesheet">
+	<script src="pog.js" type="text/javascript"></script>
+	<script src="js/jquery.min.js" type="text/javascript"></script>
+	<script src="js/image-picker.js" type="text/javascript"></script>
+	<link href="css/style.css" rel="stylesheet">
+	<!-- Just for debugging purposes. Don't actually copy this line! -->
+	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- Docs master nav -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span></button>
+				<a class="navbar-brand" href="index.php">POG + ExtJS</a>
 			</div>
-			<!-- left -->
-			<div class="middle">
-				<div class="header2"></div>
-				<!-- header -->
-				<form method="post" action="index3.php">
-					<div class="result">
-						<input type="image" src="./images/download.jpg"/>
-					</div>					
-					<!-- result -->
-					class.<?php print $_SESSION['objectName']; ?>.php
-					<div class="greybox2">
-						<textarea cols="200" rows="30"><?echo $object;?></textarea>
-					</div>
-					<?php print $_SESSION['objectName']; ?>.js
-					<div class="greybox2">
-						<textarea cols="200" rows="30"><?echo $object1;?></textarea>
-					</div>
-					controller.<?php print $_SESSION['objectName']; ?>.php
-					<div class="greybox2">
-						<textarea cols="200" rows="30"><?echo $object2;?></textarea>
-					</div>
-					<!-- greybox -->
-					<div class="generate2"></div>
-					<!-- generate -->
-					<div class="restart">
-						<a href="index_.php"><img src="./images/back1.gif" border="0"/></a><br />
-						<a href="./restart.php"><img src="./images/back2.gif" border="0"/></a>
-					</div>
-					<!-- restart -->
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="index.php">Home</a></li>
+					<li><a href="about.php">About</a></li>
+					<li><a href="contact.php">Contact</a></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<input class="form-control" placeholder="Search..." type=
+					"text">
 				</form>
-			</div><!-- middle -->
-			<div class="right2">
 			</div>
-		</div><!-- main -->
+		</div>
+	</div>
+    
+	<div class="main">
+	   <div class="page-header">
+		  <h1>PHP code generator + ExtJS Framework</h1>
+	   </div>
+	   Over the years, we realized that a large portion of a PHP programmer's time is wasted on repetitive coding of the Database Access Layer of an application simply because different applications require different objects.</p>
+	   	<div class="row">
+		  <div class="text-center col-sm-12">
+			 <form method="post" action="index3.php">
+				<button type="submit" class="btn btn-lg btn-success">
+				<span class="glyphicon glyphicon-compressed"></span> Get All Files!
+				</button>
+			 </form>
+		  </div>
+	   </div>
+	   <p></p>
+	   <div class="row">
+		  <div class="col-sm-12">
+			 <div class="panel panel-primary">
+				<div class="panel-heading">
+				   <h3 class="panel-title">class.<?php print $_SESSION['objectName']; ?>.php</h3>
+				</div>
+				<div class="panel-body">
+				   <textarea id="class" rows="30" class="form-control"><?php echo $object;?></textarea>
+				</div>
+				<div class="panel-footer">
+					<p>
+					<button class="btn btn-primary" id="selectAll" onclick="$('#class').select();" title="Selects all of the formatted HTML output"><span>SELECT ALL</span></button>
+					</p>
+				</div>
+			 </div>
+		  </div>
+		  <!-- /.col-sm-12 -->
+	   </div>
+	   <div class="row">
+		  <div class="col-sm-12">
+			 <div class="panel panel-info">
+				<div class="panel-heading">
+				   <h3 class="panel-title"><?php print $_SESSION['objectName']; ?>.js</h3>
+				</div>
+				<div class="panel-body">
+				   <textarea id="js" rows="30" class="form-control"><?php echo $object1;?></textarea>
+				</div>
+				<div class="panel-footer">
+					<p>
+					<button class="btn btn-primary" id="selectAll" onclick="$('#js').select();" title="Selects all of the formatted HTML output"><span>SELECT ALL</span></button>
+					</p>
+				</div>
+			 </div>
+		  </div>
+		  <!-- /.col-sm-12 -->
+	   </div>
+	   <div class="row">
+		  <div class="col-sm-12">
+			 <div class="panel panel-danger">
+				<div class="panel-heading">
+				   <h3 class="panel-title">controller.<?php print $_SESSION['objectName']; ?>.php</h3>
+				</div>
+				<div class="panel-body">
+				   <textarea id="controller" rows="30" class="form-control"><?php echo $object2;?></textarea>
+				</div>
+				<div class="panel-footer">
+					<p>
+					<button class="btn btn-primary" id="selectAll" onclick="$('#controller').select();" title="Selects all of the formatted HTML output"><span>SELECT ALL</span></button>
+					</p>
+				</div>
+			 </div>
+		  </div>
+		  <!-- /.col-sm-12 -->
+	   </div>
+	   <div class="row">
+		  <div class="col-sm-4">
+			 <p><a href="generator.php" class="text-info">Back to previous page with fields filled</a></p>
+			 <p><a href="restart.php" class="text-info">Back to previous page with fields cleared</a></p>
+		  </div>
+		  <!-- /.col-sm-4 -->
+		  <div class="text-center col-sm-4">
+			 <form method="post" action="index3.php">
+				<button type="submit" class="btn btn-lg btn-success">
+				<span class="glyphicon glyphicon-compressed"></span> Get All Files!
+				</button>
+			 </form>
+		  </div>
+		  <!-- /.col-sm-4 -->
+	   </div>
+	   <div class="left2">
+		  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			 <input type="hidden" name="cmd" value="_s-xclick">
+			 <input type="hidden" name="hosted_button_id" value="YX8ATWFWZFQAW">
+			 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			 <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+		  </form>
+		  <br />
+		  <br />
+	   </div>
+	</div>
+	<!-- main -->
 	</body>
 </html>
-<?
+<?php
 	$_POST = null;
 }
 else
